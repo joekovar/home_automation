@@ -3,7 +3,7 @@
 require_once('/var/www/php/common.php');
 get_pin_states();
 
-$modules = _GET('modules', array('home', 'statistics.arduino', 'statistics.server'));
+$modules = _GET('modules', array('control.home', 'statistics.arduino', 'statistics.server'));
 ksort($modules);
 $messages = array();
 
@@ -43,54 +43,26 @@ $messages = array();
 				<div class="bgbtm"></div>
 			</div>
 			<div id="sidebar">
-				<div>
-					<h2 class="title">Control Modules</h2>
-					<ul>
-						<?php
-						foreach(glob('/var/www/modules/*.php') as $val)
-						{
-							$key = basename(strtolower($val), '.php');
-							printf('<li %3$s><a href="/index.php?modules[]=%1$s">%2$s</a></li>', 
-								$key,
-								ucwords(preg_replace('#[^a-z0-9]+#', ' ', $key)),
-								isset($modules[$key]) ? 'class="active-module"' : ''
-							);
-						}
-						?>
-					</ul>
-				</div>
-				<div>
-					<h2 class="title">Statistics Modules</h2>
-					<ul>
-						<?php
-						foreach(glob('/var/www/modules/statistics/*.php') as $val)
-						{
-							$key = basename(strtolower($val), '.php');
-							printf('<li %3$s><a href="/index.php?modules[]=statistics.%1$s">%2$s</a></li>', 
-								$key,
-								ucwords(preg_replace('#[^a-z0-9]+#', ' ', $key)),
-								isset($modules["statistics.{$key}"]) ? 'class="active-module"' : ''
-							);
-						}
-						?>
-					</ul>
-				</div>
-				<div>
-					<h2 class="title">Admin Modules</h2>
-					<ul>
-						<?php
-						foreach(glob('/var/www/modules/admin/*.php') as $val)
-						{
-							$key = basename(strtolower($val), '.php');
-							printf('<li %3$s><a href="/index.php?modules[]=admin.%1$s">%2$s</a></li>', 
-								$key,
-								ucwords(preg_replace('#[^a-z0-9]+#', ' ', $key)),
-								isset($modules["admin.{$key}"]) ? 'class="active-module"' : ''
-							);
-						}
-						?>
-					</ul>
-				</div>
+			<?php
+			
+				foreach(glob('/var/www/modules/*', GLOB_ONLYDIR) as $key)
+				{
+					$_key = basename($key);
+					printf('<div><h2 class="title">%1$s Modules</h2><ul>', ucwords($_key));
+					foreach(glob("{$key}/*.php") as $val)
+					{
+						$_val = basename(strtolower($val), '.php');
+						printf('<li %3$s><a href="/index.php?modules[]=%4$s.%1$s">%2$s</a></li>', 
+							$_val,
+							ucwords(preg_replace('#[^a-z0-9]+#', ' ', $_val)),
+							isset($modules["{$_key}.{$_val}"]) ? 'class="active-module"' : '',
+							$_key
+						);
+					}
+					echo '</ul></div>';
+				}
+			
+			?>
 			</div>
 		</div>
 	</div>
