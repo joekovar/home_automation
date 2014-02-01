@@ -1,0 +1,90 @@
+<?php
+
+	$readings = array(
+		'humidity'		=> array(
+			'current'		=> 0,
+			'average'	=> 0
+		),
+		'temperature'	=> array(
+			'current'		=> 0,
+			'average'	=> 0
+		),
+	);
+	$result = $db->query("SELECT `type`, AVG(`reading`) AS average
+		FROM `climate_log`
+		WHERE `type` IN('humidity', 'temperature')
+			AND `pin` = 22
+		GROUP BY `type`");
+	while($obj = $result->fetch_object())
+	{
+		$readings[$obj->type]['average'] = $obj->average;
+	}
+	$result->free_result();
+	
+	$result = $db->query("SELECT `type`, `reading`
+		FROM `climate_log`
+		WHERE `type` IN('humidity', 'temperature')
+			AND `pin` = 22
+		ORDER BY `log_time` DESC
+		LIMIT 2");
+	while($obj = $result->fetch_object())
+	{
+		$readings[$obj->type]['current'] = $obj->reading;
+	}
+	$result->free_result();
+	
+	//$result = $db->query();
+	
+?>
+<!-- °C  x  9/5 + 32 = °F -->
+<p>The current temperature, humidity, and whether the exhaust / fart fan is on via automation (<em>Manually turning the fan on is not monitored</em>). Averages are calculated over <em>Averages Timespan</em>. The fan will not turn on between the hours of <em>Fan Quiet Time.</em></p>
+<table class="config">
+	<tr><td class="label">Current Humidity</td><td><?php echo humidity($readings['humidity']['current']); ?></td></tr>
+	<tr><td class="label">Current Temperature</td><td><?php echo temperature($readings['temperature']['current']) . ' / ' . temperature($readings['temperature']['current'], 'C'); ?></td></tr>
+	<tr><td class="label">Average Humidity</td><td><?php echo humidity($readings['humidity']['average']); ?></td></tr>
+	<tr><td class="label">Average Temperature</td><td><?php echo temperature($readings['temperature']['average']) . ' / ' . temperature($readings['temperature']['average'], 'C'); ?></td></tr>
+	<tr><td class="label">Averages Timespan</td><td><?php echo $config['climate-log-archive-interval']; ?></td></tr>
+	<tr><td class="label">Fart Fan</td><td><?php echo (@$pins[44]->state ? 'On' : 'Off'); ?></td></tr>
+	<tr><td class="label">Fan Auto-On Humidity</td><td><?php echo humidity($config['master-bath-fan-on-humidity']); ?></td></tr>
+	<tr><td class="label">Fan Quiet Time</td><td><?php echo $config['master-bath-fan-quiet-after'] . ' - ' . $config['master-bath-fan-quiet-before']; ?></td></tr>
+</table>
+<!--
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script type='text/javascript'>
+google.load('visualization', '1', {packages:['corechart']});
+google.setOnLoadCallback(drawChart);
+function drawChart()
+{
+	var data = google.visualization.arrayToDataTable([
+		['Time', 'Humidity'],
+<?php
+/*
+$result = $db->query('SELECT log_time, reading FROM climate_log
+	WHERE pin = 22
+		AND type = "humidity"
+	ORDER BY log_time DESC
+	LIMIT 1440;');
+
+while($obj = $result->fetch_object())
+{
+	echo "['{$obj->log_time}',{$obj->reading}],";
+}
+*/
+?>
+	]);
+
+	var options = {
+		width: 600, height: 350,
+		backgroundColor: '#000',
+		colors: ['#7788ff'],
+		hAxis: {maxValue:100, minValue:0},
+		lineWidth:1
+		
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('bathroom-guages'));
+	chart.draw(data, options);
+}
+</script>
+<div id="bathroom-guages"></div>
+-->

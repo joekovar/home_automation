@@ -1,0 +1,395 @@
+
+@font-face {
+  font-family: 'Arvo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arvo'), url(/style/arvo.woff) format('woff');
+}
+@font-face {
+  font-family: 'Arvo';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Arvo Bold'), local('Arvo-Bold'), url(/style/arvo-bold.woff) format('woff');
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background: url(/style/images/wrapper-bg.png) repeat;
+	font-family: 'Arvo', serif;
+	font-size: 14px;
+	color: #ccc;
+}
+
+h1, h2, h3 {
+	margin: 0px;
+	padding: 0px;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	
+}
+
+p, ol, ul {
+	margin-top: 0px;
+}
+
+p, ol {
+	line-height: 190%;
+}
+
+strong {
+	color:#9dd;
+}
+
+acronym {
+	cursor:help;
+}
+
+a {
+	color: #0cf;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a img {
+	border: none;
+}
+
+img.border {
+}
+
+img.alignleft {
+	float: left;
+	margin-top: 5px;
+	margin-right: 30px;
+}
+
+img.alignright {
+	float: right;
+}
+
+img.aligncenter {
+	margin: 0px auto;
+}
+
+hr {
+	display: none;
+}
+
+th {
+	color:#fff;
+	text-align:center;
+}
+table.config {
+	width:100%;
+	margin:10px 0 25px 0;
+}
+table.config tr td {
+	padding:5px 0 5px 5px;
+	font-family: Tahoma;
+	text-align:center;
+	border-bottom:#555 1px dashed;
+	border-left:#555 1px dashed;
+}
+table.config tr  td.label {
+	font-weight:bold;
+	text-align:left;
+	border-left:0;
+}
+table.config tr  td.label-top {
+	font-weight:bold;
+	text-align:left;
+	border:0;
+	border-top:#555 1px dashed;
+}
+table.config tr  td.label-bottom {
+	text-align:left;
+	border:0;
+}
+table.config tr.label-middle td{
+	border-bottom:0;
+}
+table.events {
+	color:#fff;
+	font-family: Tahoma;
+	font-size:small;
+	text-align:center;
+	width:100%;
+}
+table.events tr td {
+	background:#111;
+}
+table.events tr td.label {
+	text-align:left;
+	background:#000;
+	color:#04969c;
+	font-weight:bold;
+}
+table.events tr td.label span.note
+{
+	color:#ddd;
+	font-weight:normal;
+}
+table.events tr td.label span.note:before {
+	content: " - ";
+}
+
+fieldset {
+	margin:0;
+	padding:0;
+	border:0;
+}
+
+fieldset.left-block {
+	float:left;
+	margin:0 0 10px 10px;
+}
+fieldset.left-block > label {
+	display:block;
+	margin:0 0 5px 0;
+	font-weight:bold;
+}
+
+/* FORMS */
+fieldset dt, fieldset dd {
+	
+}
+fieldset dt {
+	color:#fff;
+	padding:10px 0 5px 0;
+}
+.text {
+	width: 300px;
+	background:#111;
+	color:#ccc;
+	font-size:16px;
+	font-family: Tahoma, sans;
+	border:#777 1px inset;
+}
+
+.button1 {
+	display: block;
+	width: 168px;
+	height: 63px;
+	background: url(/style/images/post-meta-button.png) no-repeat left top;
+	line-height: 63px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: 900;
+	color: #FFFFFF;
+	border:0;
+	margin:0;
+	padding:0;
+	cursor:pointer;
+}
+
+.button1:hover {
+	color:#ccf;
+}
+
+.lefty-button1 {
+	float:right;
+	margin:50px 10px 0 0;
+}
+.lefty-button2 {
+	float:right;
+	margin:0 10px 0 0;
+}
+
+select, option {
+	background:#000;;
+	color:#fff;
+	font-family:Tahoma;
+	border: 0;
+}
+
+/** WRAPPER */
+
+#wrapper-gradiant {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	background: url(/style/images/wrapper-content-gradient.png) repeat-y center top;
+}
+
+#wrapper-bgshadow {
+	background: url(/style/images/bg-shadow.png) repeat-x left top;
+}
+
+#wrapper {
+	overflow: hidden;
+	width: 1010px;
+	margin: 0px auto;
+}
+
+.container {
+	width: 980px;
+	margin: 0px auto;
+}
+
+.clearfix {
+	clear: both;
+}
+
+/** PAGE */
+
+#page {
+	float: left;
+	width: 670px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+#page .bgtop {
+	height: 15px;
+	background: url(/style/images/page-content-bg-01.png) no-repeat left top;
+}
+
+#page .bgbtm {
+	height: 15px;
+	background: url(/style/images/page-content-bg-03.png) no-repeat left bottom;
+}
+
+#page .bgcontent {
+	overflow: hidden;
+	padding: 30px 30px 40px 50px;
+	background: url(/style/images/page-content-bg-02.png) repeat-y left top;
+}
+
+.post {
+	text-shadow: 1px 1px 1px #000000;
+}
+
+.post .title {
+	padding: 0px 0px 20px 0px;
+	font-size: 30px;
+	font-weight: 900;
+	color: #FFFFFF;
+}
+
+.post .title a {
+	display: block;
+	letter-spacing: -2px;
+	text-shadow: 2px 2px 2px #070809;
+	text-decoration: none;
+}
+
+.post .title-liner {
+	display: block;
+	margin-top: -5px;
+	padding: 0px 0px 20px 0px;
+	line-height: normal;
+	letter-spacing: -1px;
+	text-transform: uppercase;
+	font-size: 18px;
+	color: #889195;
+}
+
+.post .subtitle {
+	padding: 8px 0px 20px 0px;
+	font-size: 18px;
+	font-weight: 900;
+	color: #FFFFFF;
+	margin-top:30px;
+	border-top:#666 1px dashed;
+}
+
+.post .subtitle a {
+	display: block;
+	letter-spacing: -2px;
+	text-shadow: 2px 2px 2px #070809;
+	text-decoration: none;
+}
+
+
+.post .divider {
+	border-bottom: 1px solid #414242;
+	margin: 40px 0px;
+}
+
+li.active-module a, li.active-module a:active {
+	color:#fff;
+	text-decoration:none;
+}
+
+/** SIDEBAR */
+
+#sidebar {
+	float: right;
+	width: 330px;
+}
+
+#sidebar .title {
+	display: block;
+	width: 260px;
+	height: 42px;
+	margin-left: -10px;
+	padding: 0px 35px;
+	background: url(/style/images/sidebar-title-bg.png) no-repeat center center;
+	line-height: 42px;
+	text-shadow: 1px 2px 1px #101618;
+	font-size: 18px;
+	font-weight: 900;
+	border-radius:10px;
+}
+
+#sidebar ul {
+	margin: 0px;
+	padding: 10px 0px;
+	list-style: none;
+}
+
+#sidebar li {
+	border-top: 1px solid #414242;
+	margin: 0px 30px;
+	padding: 10px 0px 20px 0px;
+}
+
+#sidebar li a {
+	text-shadow: 2px 2px 2px #131415;
+	font-size: 14px;
+}
+
+#sidebar .first {
+	border-top: none;
+}
+
+/** FOOTER */
+
+#footer {
+	overflow: hidden;
+	height: 235px;
+}
+
+#footer p {
+	margin: 0px;
+	padding: 60px 0px 0px 0px;
+	text-align: center;
+	text-shadow: 2px 1px 2px #0D0D0D;
+	font-size: 14px;
+	color: #6E7476;
+}
+
+#footer a {
+	text-decoration: none;
+	color: #6E7476;
+}
+
+#footer a:hover {
+	text-decoration: underline;
+}
+
+p.info {border:#3e4d52 1px solid; border-radius:5px; background:#000; color:#fff; padding:10px; margin:0 0 20px 0;}
+span.yes, span.closed, span.on {color:#090;}
+span.no, span.open, span.off {color:#900;}
+
+ul.quick-links {list-style:none;}
+ul.quick-links > li {float:left; margin:0 0 10px 20px;}
