@@ -4,7 +4,7 @@ define('ROOT_PATH', dirname($_SERVER['SCRIPT_FILENAME']));
 require_once(ROOT_PATH . '/php/common.php');
 get_pin_states();
 
-$modules = _GET('modules', array('control.home', 'statistics.arduino', 'statistics.server'));
+$modules = _GET('modules', empty($config['default-modules']) ? array('control.home', 'statistics.arduino', 'statistics.server') : explode(',', $config['default-modules']));
 ksort($modules);
 $messages = array();
 
