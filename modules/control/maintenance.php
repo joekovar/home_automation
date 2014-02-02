@@ -59,6 +59,29 @@ if(_GET('submit-service-performed', false) && count(_GET('maintenance', array())
 	}
 }
 
+if(_GET('submit-service-delete', false) && count(_GET('maintenance', array())))
+{
+	$sql = array();
+	foreach(_GET('maintenance') as $val)
+	{
+		if((int)$val == $val)
+		{
+			$sql[$val] = $val;
+		}
+	}
+	if(count($sql))
+	{
+		if($db->query('DELETE FROM `maintenance_items` WHERE `id` IN(' . implode(',', array_keys($sql)) . ')'))
+		{
+			message::display('Deleted selected maintenance items.');
+		}
+		if($db->query('DELETE FROM `maintenance_log` WHERE `item_id` IN(' . implode(',', array_keys($sql)) . ')'))
+		{
+			message::display('Deleted selected maintenance item history.');
+		}
+	}
+}
+
 /*
 | id             				| int(10) unsigned
 | name         			| varchar(64)
@@ -145,7 +168,7 @@ if($result = $db->query('SELECT `id`, `name`, `last_performed`, `interval_days`,
 		{
 			echo '<h3 class="subtitle" style="color:#090;">Maintenance</h3><table class="events" cellpadding="3"><tr><th>Interval</th><th>When</th><th>Last Performed</th><th>Next Due</th><th>Mark</th></tr>', implode('', $maintenance_items['normal']), '</table>';
 		}
-		echo '<input type="submit" class="button1" style="float:right; margin:50px 10px 0 0;" name="submit-service-performed" value="Mark Performed"/></form><br class="clearfix"/>';
+		echo '<input type="submit" class="button1" style="float:right; margin:50px 10px 0 0;" name="submit-service-performed" value="Mark Performed"/>&nbsp;&nbsp;<input type="submit" class="button1" style="float:right; margin:50px 10px 0 0;" name="submit-service-delete" value="Delete Selected"/></form><br class="clearfix"/>';
 	}
 }else{echo $db->error;}
 
