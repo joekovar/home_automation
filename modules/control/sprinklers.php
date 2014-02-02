@@ -68,7 +68,7 @@ function toggle_sprinkler(pin, button)
 
 <?php
 
-include_once('/var/www/php/common.php');
+include_once(ROOT_PATH . '/php/common.php');
 global $day_of_week_bitmask;
 
 $sprinklers = array();

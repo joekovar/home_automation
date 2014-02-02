@@ -1,7 +1,7 @@
 <p>Information about the PC/Server.</p>
 <?php
 
-include_once('/var/www/php/common.php');
+include_once(ROOT_PATH . '/php/common.php');
 
 if($key = scandir('/home'))
 {

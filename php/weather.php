@@ -3,10 +3,10 @@
 class weather
 {
 	public static $forecast_url = 'http://api.wunderground.com/api/%1$s/forecast/q/%2$s.xml';
-	public static $forecast_cache = '/var/www/cache/weather/forecast.xml';
+	public static $forecast_cache = ROOT_PATH . '/cache/weather/forecast.xml';
 
 	public static $hourly_url = 'http://api.wunderground.com/api/%1$s/hourly/q/%2$s.xml';
-	public static $hourly_cache = '/var/www/cache/weather/hourly.xml';
+	public static $hourly_cache = ROOT_PATH . '/cache/weather/hourly.xml';
 	
 	public static $today_low = false;
 

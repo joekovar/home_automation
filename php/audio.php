@@ -2,7 +2,7 @@
 
 if( !defined('AUDIO_CACHE_PATH'))
 {
-	define('AUDIO_CACHE_PATH', '/var/www/cache/audio');
+	define('AUDIO_CACHE_PATH', ROOT_PATH . '/cache/audio');
 }
 if( !defined('AUDIO_HASH_ALGO'))
 {

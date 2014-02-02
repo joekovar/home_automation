@@ -1,6 +1,6 @@
 <?php
 
-require_once('/var/www/php/common.php');
+require_once(ROOT_PATH . '/php/common.php');
 
 class module
 {
@@ -24,7 +24,7 @@ class module
 			$_name	= implode('/', $_name) . "/{$name}";
 		}
 		
-		if( ! file_exists("/var/www/modules/{$_name}.php"))
+		if( ! file_exists(ROOT_PATH . "/modules/{$_name}.php"))
 		{
 			return 0;
 		}
@@ -32,7 +32,7 @@ class module
 		global $db, $config, $pins;
 		
 		printf('<div class="post"><h3 class="title">%1$s</h3>', ucwords(str_replace('-', ' ', $name)));
-		include("/var/www/modules/{$_name}.php");
+		include(ROOT_PATH . "/modules/{$_name}.php");
 		print('<div class="divider"></div></div>');
 		
 		return 1;

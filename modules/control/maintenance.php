@@ -4,7 +4,7 @@ changing the air conditioning filter, flushing the water heater, etc.</p>
 
 echo date('r', time());
 
-include_once('/var/www/php/common.php');
+include_once(ROOT_PATH . '/php/common.php');
 
 if(_GET('submit-new-service', false))
 {

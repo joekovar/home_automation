@@ -1,6 +1,7 @@
 <?php
 
-include_once('/var/www/php/common.php');
+define('ROOT_PATH', dirname($_SERVER['SCRIPT_FILENAME']));
+include_once(ROOT_PATH . '/php/common.php');
 
 $pin = (int)_GET('pin');
 

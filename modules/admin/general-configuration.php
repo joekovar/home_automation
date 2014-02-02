@@ -1,13 +1,13 @@
 <?php
 
-include_once('/var/www/php/common.php');
+include_once(ROOT_PATH . '/php/common.php');
 
 if(_GET('update-config-stats', false))
 {
 	$sql = '';
 	foreach($config as $key => $val)
 	{
-		$val = (int)shell_exec("grep -R '{$key}' /var/www/ | wc -l");
+		$val = (int)shell_exec("grep -R '{$key}' " . ROOT_PATH . "/ | wc -l");
 		$sql .= ",('{$key}', {$val})";
 	}
 	if( !empty($sql))

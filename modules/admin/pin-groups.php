@@ -4,7 +4,7 @@ control and statistics modules.</p>
 
 $groups = array();
 
-include_once('/var/www/php/common.php');
+include_once(ROOT_PATH . '/php/common.php');
 
 if(_GET('submit'))
 {

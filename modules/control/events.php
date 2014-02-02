@@ -1,6 +1,6 @@
 <?php
 
-include_once('/var/www/php/common.php');
+include_once(ROOT_PATH . '/php/common.php');
 
 global $network_map;
 
@@ -9,9 +9,9 @@ if(_GET('archive', false))
 	$result = $db->query('SELECT `id` FROM `event_log` WHERE `notes` = "Startup signal sent from Arduino" ORDER BY `id` DESC LIMIT 1');
 	if($obj = $result->fetch_object())
 	{
-		if($result = $db->query("SELECT * FROM `event_log` WHERE `id` < {$obj->id} INTO OUTFILE '/var/www/backup/events/" . time() . ".sql'"))
+		if($result = $db->query("SELECT * FROM `event_log` WHERE `id` < {$obj->id} INTO OUTFILE '" . ROOT_PATH . "/backup/events/" . time() . ".sql'"))
 		{
-			//shell_exec('gzip -9 /var/www/backup/events/*.sql');
+			//shell_exec('gzip -9 ' . ROOT_PATH . '/backup/events/*.sql');
 			if($result = $db->query("DELETE FROM `event_log` WHERE `id` < {$obj->id}"))
 			{
 				echo new message("Successfully archived all entries older than ID={$obj->id}");

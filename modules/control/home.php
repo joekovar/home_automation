@@ -1,4 +1,4 @@
-<?php include_once('/var/www/php/common.php'); ?>
+<?php include_once(ROOT_PATH . '/php/common.php'); ?>
 
 <p>Use the modules listed in the menu on the right side to control and monitor the house.</p>
 <p><strong>Control Modules</strong> are for turning things off/on and adjusting settings related to those specific modules.</p>

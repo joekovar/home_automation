@@ -2,7 +2,7 @@
 The <strong>red</strong> bar represents maintenance which was past due.<br/>
 The <strong>dark gray</strong> bar represents maintenance performed right on time.</p><?php
 
-include_once('/var/www/php/common.php');
+include_once(ROOT_PATH . '/php/common.php');
 
 $maintenance_items = array();
 

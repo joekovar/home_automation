@@ -9,7 +9,7 @@ date_default_timezone_set('America/New_York');
 
 function __autoload($class)
 {
-	require_once('/var/www/php/' . preg_replace('#[^a-z0-9_-]+#', '', $class) . '.php');
+	require_once(ROOT_PATH . '/php/' . preg_replace('#[^a-z0-9_-]+#', '', $class) . '.php');
 }
 
 $db = new mysqli(null, 'home_automation', 'password', 'home_automation', null, '/var/run/mysqld/mysqld.sock');

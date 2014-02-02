@@ -1,6 +1,7 @@
 <?php
 
-require_once('/var/www/php/common.php');
+define('ROOT_PATH', dirname($_SERVER['SCRIPT_FILENAME']));
+require_once(ROOT_PATH . '/php/common.php');
 get_pin_states();
 
 $modules = _GET('modules', array('control.home', 'statistics.arduino', 'statistics.server'));
@@ -45,7 +46,7 @@ $messages = array();
 			<div id="sidebar">
 			<?php
 			
-				foreach(glob('/var/www/modules/*', GLOB_ONLYDIR) as $key)
+				foreach(glob(ROOT_PATH . '/modules/*', GLOB_ONLYDIR) as $key)
 				{
 					$_key = basename($key);
 					printf('<div><h2 class="title">%1$s Modules</h2><ul>', ucwords($_key));
