@@ -6,7 +6,7 @@
 <p><strong>Admin Modules</strong> are typically system-wide settings such as the format used to display dates, manual configuration editing, etc.</p>
 
 <?php
-	echo '<p>Today\'s low temperature: ' . weather::today_low() . '</p>';
+	echo '<p>Today\'s low/high temperatures: ' . weather::today_low() . 'F/' . weather::today_high() . 'F</p>';
 ?>
 
 <h3 class="subtitle">Quick Links</h3>
