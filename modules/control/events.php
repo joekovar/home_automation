@@ -21,7 +21,7 @@ if(_GET('archive', false))
 }
 ?>
 <p>Use the options below to look for specific events. When no options are selected, the last <?php echo $config['recent-events-count']; ?> events are displayed.</p>
-<form action="/index.php?modules[]=events" method="post">
+<form action="" method="post">
 	<fieldset class="left-block">
 	<label for="source">Sources</label>
 	<select name="source[]" multiple="multiple" size="6">
