@@ -13,11 +13,11 @@ $messages = array();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Home Status</title>
-<link rel="stylesheet" type="text/css" media="all" href="jquery-ui-1.10.3/themes/vader/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/style/jquery-ui-1.10.3/themes/vader/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/style/default.css"  />
-<script type="text/javascript" src="jquery-ui-1.10.3/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="jquery-ui-1.10.3/ui/jquery-ui.js"></script>
-<script type="text/javascript" src="jquery-ui-1.10.3/ui/jquery.ui.timepicker.js"></script>
+<script type="text/javascript" src="/style/jquery-ui-1.10.3/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/style/jquery-ui-1.10.3/ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/style/jquery-ui-1.10.3/ui/jquery.ui.timepicker.js"></script>
 </head>
 <body>
 <div id="wrapper-gradiant">
