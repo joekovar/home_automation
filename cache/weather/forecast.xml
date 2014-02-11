@@ -7,78 +7,78 @@
 	</features>
 	<forecast>
 		<txt_forecast>
-		<date>4:00 PM EST</date>
+		<date>10:00 PM EST</date>
 		<forecastdays>
 		<forecastday>
 		<period>0</period>
-		<icon>rain</icon>
-		<icon_url>http://icons-ak.wxug.com/i/c/k/rain.gif</icon_url>
-		<title>Saturday</title>
-		<fcttext><![CDATA[Overcast with rain showers. High of 66F. Winds from the NNE at 5 to 15 mph. Chance of rain 70%.]]></fcttext>
-		<fcttext_metric><![CDATA[Overcast with rain showers. High of 19C. Winds from the NNE at 5 to 20 km/h. Chance of rain 70%.]]></fcttext_metric>
-		<pop>70</pop>
+		<icon>partlycloudy</icon>
+		<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
+		<title>Monday</title>
+		<fcttext><![CDATA[Partly cloudy. Fog early. High of 73F. Winds from the ENE at 5 to 10 mph shifting to the NW in the afternoon.]]></fcttext>
+		<fcttext_metric><![CDATA[Partly cloudy. Fog early. High of 23C. Winds from the ENE at 10 to 15 km/h shifting to the NW in the afternoon.]]></fcttext_metric>
+		<pop>0</pop>
 		</forecastday>
 		<forecastday>
 		<period>1</period>
-		<icon>chancerain</icon>
-		<icon_url>http://icons-ak.wxug.com/i/c/k/chancerain.gif</icon_url>
-		<title>Saturday Night</title>
-		<fcttext><![CDATA[Overcast with a chance of rain. Low of 55F. Winds from the NE at 5 to 10 mph. Chance of rain 30%.]]></fcttext>
-		<fcttext_metric><![CDATA[Overcast with a chance of rain. Low of 13C. Winds from the NE at 10 to 15 km/h. Chance of rain 30%.]]></fcttext_metric>
-		<pop>30</pop>
+		<icon>clear</icon>
+		<icon_url>http://icons-ak.wxug.com/i/c/k/clear.gif</icon_url>
+		<title>Monday Night</title>
+		<fcttext><![CDATA[Clear. Low of 55F. Winds from the NNE at 5 to 10 mph.]]></fcttext>
+		<fcttext_metric><![CDATA[Clear. Low of 13C. Winds from the NNE at 10 to 15 km/h.]]></fcttext_metric>
+		<pop>0</pop>
 		</forecastday>
 		<forecastday>
 		<period>2</period>
 		<icon>partlycloudy</icon>
 		<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
-		<title>Sunday</title>
-		<fcttext><![CDATA[Overcast in the morning, then clear. High of 68F. Winds from the North at 5 to 10 mph.]]></fcttext>
-		<fcttext_metric><![CDATA[Overcast in the morning, then clear. High of 20C. Winds from the North at 10 to 15 km/h.]]></fcttext_metric>
-		<pop>10</pop>
+		<title>Tuesday</title>
+		<fcttext><![CDATA[Clear. High of 73F. Winds from the East at 5 to 10 mph shifting to the NNW in the afternoon.]]></fcttext>
+		<fcttext_metric><![CDATA[Clear. High of 23C. Winds from the East at 5 to 15 km/h shifting to the NNW in the afternoon.]]></fcttext_metric>
+		<pop>0</pop>
 		</forecastday>
 		<forecastday>
 		<period>3</period>
-		<icon>clear</icon>
-		<icon_url>http://icons-ak.wxug.com/i/c/k/clear.gif</icon_url>
-		<title>Sunday Night</title>
-		<fcttext><![CDATA[Clear. Low of 57F. Winds from the NNE at 5 to 10 mph.]]></fcttext>
-		<fcttext_metric><![CDATA[Clear. Low of 14C. Winds from the NNE at 10 to 15 km/h.]]></fcttext_metric>
+		<icon>partlycloudy</icon>
+		<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
+		<title>Tuesday Night</title>
+		<fcttext><![CDATA[Partly cloudy. Low of 57F. Winds from the NNW at 5 to 10 mph.]]></fcttext>
+		<fcttext_metric><![CDATA[Partly cloudy. Low of 14C. Winds from the NNW at 10 to 15 km/h.]]></fcttext_metric>
 		<pop>10</pop>
 		</forecastday>
 		<forecastday>
 		<period>4</period>
-		<icon>clear</icon>
-		<icon_url>http://icons-ak.wxug.com/i/c/k/clear.gif</icon_url>
-		<title>Monday</title>
-		<fcttext><![CDATA[Clear. High of 70F. Winds from the ENE at 5 to 10 mph shifting to the WSW in the afternoon.]]></fcttext>
-		<fcttext_metric><![CDATA[Clear. High of 21C. Winds from the ENE at 10 to 15 km/h shifting to the WSW in the afternoon.]]></fcttext_metric>
-		<pop>10</pop>
+		<icon>tstorms</icon>
+		<icon_url>http://icons-ak.wxug.com/i/c/k/tstorms.gif</icon_url>
+		<title>Wednesday</title>
+		<fcttext><![CDATA[Overcast with  a chance of a thunderstorm and a chance of rain in the afternoon. Fog early. High of 75F. Winds from the South at 5 to 15 mph. Chance of rain 40%.]]></fcttext>
+		<fcttext_metric><![CDATA[Overcast with  a chance of a thunderstorm and a chance of rain in the afternoon. Fog early. High of 24C. Windy. Winds from the South at 10 to 25 km/h. Chance of rain 40%.]]></fcttext_metric>
+		<pop>40</pop>
 		</forecastday>
 		<forecastday>
 		<period>5</period>
-		<icon>partlycloudy</icon>
-		<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
-		<title>Monday Night</title>
-		<fcttext><![CDATA[Clear in the evening, then partly cloudy. Low of 59F. Winds from the NNE at 5 to 10 mph.]]></fcttext>
-		<fcttext_metric><![CDATA[Clear in the evening, then partly cloudy. Low of 15C. Winds from the NNE at 10 to 15 km/h.]]></fcttext_metric>
-		<pop>0</pop>
+		<icon>tstorms</icon>
+		<icon_url>http://icons-ak.wxug.com/i/c/k/tstorms.gif</icon_url>
+		<title>Wednesday Night</title>
+		<fcttext><![CDATA[Overcast with thunderstorms and rain showers. Low of 59F. Breezy. Winds from the SW at 10 to 20 mph shifting to the WNW after midnight. Chance of rain 50% with rainfall amounts near 0.4 in. possible.]]></fcttext>
+		<fcttext_metric><![CDATA[Overcast with thunderstorms and rain showers. Low of 15C. Windy. Winds from the SW at 20 to 30 km/h shifting to the WNW after midnight. Chance of rain 50% with rainfall amounts near 9.9 mm possible.]]></fcttext_metric>
+		<pop>50</pop>
 		</forecastday>
 		<forecastday>
 		<period>6</period>
-		<icon>partlycloudy</icon>
-		<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
-		<title>Tuesday</title>
-		<fcttext><![CDATA[Partly cloudy. High of 77F. Winds from the SSE at 5 to 10 mph.]]></fcttext>
-		<fcttext_metric><![CDATA[Partly cloudy. High of 25C. Winds from the SSE at 10 to 15 km/h.]]></fcttext_metric>
-		<pop>0</pop>
+		<icon>mostlycloudy</icon>
+		<icon_url>http://icons-ak.wxug.com/i/c/k/mostlycloudy.gif</icon_url>
+		<title>Thursday</title>
+		<fcttext><![CDATA[Overcast. High of 61F. Breezy. Winds from the NNW at 15 to 20 mph.]]></fcttext>
+		<fcttext_metric><![CDATA[Overcast. High of 16C. Windy. Winds from the NNW at 20 to 30 km/h.]]></fcttext_metric>
+		<pop>10</pop>
 		</forecastday>
 		<forecastday>
 		<period>7</period>
 		<icon>partlycloudy</icon>
 		<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
-		<title>Tuesday Night</title>
-		<fcttext><![CDATA[Partly cloudy. Low of 61F. Winds from the NNE at 5 to 10 mph.]]></fcttext>
-		<fcttext_metric><![CDATA[Partly cloudy. Low of 16C. Winds from the NNE at 10 to 15 km/h.]]></fcttext_metric>
+		<title>Thursday Night</title>
+		<fcttext><![CDATA[Partly cloudy. Low of 46F. Winds from the North at 5 to 15 mph.]]></fcttext>
+		<fcttext_metric><![CDATA[Partly cloudy. Low of 8C. Breezy. Winds from the North at 10 to 25 km/h.]]></fcttext_metric>
 		<pop>0</pop>
 		</forecastday>
 		</forecastdays>
@@ -87,160 +87,6 @@
 		<forecastdays>
 		<forecastday>
 		<date>
-  <epoch>1391914800</epoch>
-  <pretty_short>10:00 PM EST</pretty_short>
-  <pretty>10:00 PM EST on February 08, 2014</pretty>
-  <day>8</day>
-  <month>2</month>
-  <year>2014</year>
-  <yday>38</yday>
-  <hour>22</hour>
-  <min>00</min>
-  <sec>0</sec>
-  <isdst>0</isdst>
-  <monthname>February</monthname>
-  <monthname_short>Feb</monthname_short>
-  <weekday_short>Sat</weekday_short>
-  <weekday>Saturday</weekday>
-  <ampm>PM</ampm>
-  <tz_short>EST</tz_short>
-  <tz_long>America/New_York</tz_long>
-</date>
-					<period>1</period>
-					<high>
-						<fahrenheit>66</fahrenheit>
-						<celsius>19</celsius>
-					</high>
-					<low>
-						<fahrenheit>55</fahrenheit>
-						<celsius>13</celsius>
-					</low>
-					<conditions>Rain Showers</conditions>
-					
-					<icon>rain</icon>
-					<icon_url>http://icons-ak.wxug.com/i/c/k/rain.gif</icon_url>
-					<skyicon>cloudy</skyicon>
-					<pop>70</pop>
-					<qpf_allday>
-						<in>0.10</in>
-						<mm>2.5</mm>
-					</qpf_allday>
-					<qpf_day>
-						<in>0.08</in>
-						<mm>2.0</mm>
-					</qpf_day>
-					<qpf_night>
-						<in>0.02</in>
-						<mm>0.5</mm>
-					</qpf_night>
-					<snow_allday>
-						<in>0</in>
-						<cm>0</cm>
-					</snow_allday>
-					<snow_day>
-						<in>0</in>
-						<cm>0</cm>
-					</snow_day>
-					<snow_night>
-						<in>0</in>
-						<cm>0</cm>
-					</snow_night>
-					<maxwind>
-						<mph>12</mph>
-						<kph>19</kph>
-						<dir>NNE</dir>
-						<degrees>20</degrees>
-					</maxwind>
-					<avewind>
-						<mph>8</mph>
-						<kph>13</kph>
-						<dir>ENE</dir>
-						<degrees>73</degrees>
-					</avewind>
-					<avehumidity>87</avehumidity>
-					<maxhumidity>90</maxhumidity>
-					<minhumidity>81</minhumidity>
-				</forecastday>
-				
-				<forecastday>
-					<date>
-  <epoch>1392001200</epoch>
-  <pretty_short>10:00 PM EST</pretty_short>
-  <pretty>10:00 PM EST on February 09, 2014</pretty>
-  <day>9</day>
-  <month>2</month>
-  <year>2014</year>
-  <yday>39</yday>
-  <hour>22</hour>
-  <min>00</min>
-  <sec>0</sec>
-  <isdst>0</isdst>
-  <monthname>February</monthname>
-  <monthname_short>Feb</monthname_short>
-  <weekday_short>Sun</weekday_short>
-  <weekday>Sunday</weekday>
-  <ampm>PM</ampm>
-  <tz_short>EST</tz_short>
-  <tz_long>America/New_York</tz_long>
-</date>
-					<period>2</period>
-					<high>
-						<fahrenheit>68</fahrenheit>
-						<celsius>20</celsius>
-					</high>
-					<low>
-						<fahrenheit>57</fahrenheit>
-						<celsius>14</celsius>
-					</low>
-					<conditions>Partly Cloudy</conditions>
-					
-					<icon>partlycloudy</icon>
-					<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
-					<skyicon>mostlysunny</skyicon>
-					<pop>10</pop>
-					<qpf_allday>
-						<in>0.00</in>
-						<mm>0.0</mm>
-					</qpf_allday>
-					<qpf_day>
-						<in>0.00</in>
-						<mm>0.0</mm>
-					</qpf_day>
-					<qpf_night>
-						<in>0.00</in>
-						<mm>0.0</mm>
-					</qpf_night>
-					<snow_allday>
-						<in>0</in>
-						<cm>0</cm>
-					</snow_allday>
-					<snow_day>
-						<in>0</in>
-						<cm>0</cm>
-					</snow_day>
-					<snow_night>
-						<in>0</in>
-						<cm>0</cm>
-					</snow_night>
-					<maxwind>
-						<mph>9</mph>
-						<kph>14</kph>
-						<dir>NNE</dir>
-						<degrees>19</degrees>
-					</maxwind>
-					<avewind>
-						<mph>8</mph>
-						<kph>13</kph>
-						<dir>WSW</dir>
-						<degrees>258</degrees>
-					</avewind>
-					<avehumidity>74</avehumidity>
-					<maxhumidity>91</maxhumidity>
-					<minhumidity>60</minhumidity>
-				</forecastday>
-				
-				<forecastday>
-					<date>
   <epoch>1392087600</epoch>
   <pretty_short>10:00 PM EST</pretty_short>
   <pretty>10:00 PM EST on February 10, 2014</pretty>
@@ -260,21 +106,21 @@
   <tz_short>EST</tz_short>
   <tz_long>America/New_York</tz_long>
 </date>
-					<period>3</period>
+					<period>1</period>
 					<high>
-						<fahrenheit>70</fahrenheit>
-						<celsius>21</celsius>
+						<fahrenheit>73</fahrenheit>
+						<celsius>23</celsius>
 					</high>
 					<low>
-						<fahrenheit>59</fahrenheit>
-						<celsius>15</celsius>
+						<fahrenheit>55</fahrenheit>
+						<celsius>13</celsius>
 					</low>
-					<conditions>Clear</conditions>
+					<conditions>Partly Cloudy</conditions>
 					
-					<icon>clear</icon>
-					<icon_url>http://icons-ak.wxug.com/i/c/k/clear.gif</icon_url>
-					<skyicon>mostlysunny</skyicon>
-					<pop>10</pop>
+					<icon>partlycloudy</icon>
+					<icon_url>http://icons-ak.wxug.com/i/c/k/partlycloudy.gif</icon_url>
+					<skyicon>sunny</skyicon>
+					<pop>0</pop>
 					<qpf_allday>
 						<in>0.00</in>
 						<mm>0.0</mm>
@@ -300,20 +146,20 @@
 						<cm>0</cm>
 					</snow_night>
 					<maxwind>
-						<mph>7</mph>
-						<kph>11</kph>
-						<dir>SW</dir>
-						<degrees>227</degrees>
+						<mph>8</mph>
+						<kph>13</kph>
+						<dir>NNW</dir>
+						<degrees>330</degrees>
 					</maxwind>
 					<avewind>
 						<mph>6</mph>
 						<kph>10</kph>
-						<dir>West</dir>
-						<degrees>274</degrees>
+						<dir>WNW</dir>
+						<degrees>290</degrees>
 					</avewind>
-					<avehumidity>72</avehumidity>
-					<maxhumidity>88</maxhumidity>
-					<minhumidity>56</minhumidity>
+					<avehumidity>68</avehumidity>
+					<maxhumidity>89</maxhumidity>
+					<minhumidity>53</minhumidity>
 				</forecastday>
 				
 				<forecastday>
@@ -337,14 +183,14 @@
   <tz_short>EST</tz_short>
   <tz_long>America/New_York</tz_long>
 </date>
-					<period>4</period>
+					<period>2</period>
 					<high>
-						<fahrenheit>77</fahrenheit>
-						<celsius>25</celsius>
+						<fahrenheit>73</fahrenheit>
+						<celsius>23</celsius>
 					</high>
 					<low>
-						<fahrenheit>61</fahrenheit>
-						<celsius>16</celsius>
+						<fahrenheit>57</fahrenheit>
+						<celsius>14</celsius>
 					</low>
 					<conditions>Partly Cloudy</conditions>
 					
@@ -377,20 +223,174 @@
 						<cm>0</cm>
 					</snow_night>
 					<maxwind>
-						<mph>9</mph>
-						<kph>14</kph>
-						<dir>NNW</dir>
-						<degrees>336</degrees>
-					</maxwind>
-					<avewind>
 						<mph>7</mph>
 						<kph>11</kph>
-						<dir>West</dir>
-						<degrees>271</degrees>
+						<dir>ENE</dir>
+						<degrees>69</degrees>
+					</maxwind>
+					<avewind>
+						<mph>5</mph>
+						<kph>8</kph>
+						<dir>WSW</dir>
+						<degrees>240</degrees>
 					</avewind>
-					<avehumidity>70</avehumidity>
-					<maxhumidity>75</maxhumidity>
-					<minhumidity>59</minhumidity>
+					<avehumidity>74</avehumidity>
+					<maxhumidity>83</maxhumidity>
+					<minhumidity>54</minhumidity>
+				</forecastday>
+				
+				<forecastday>
+					<date>
+  <epoch>1392260400</epoch>
+  <pretty_short>10:00 PM EST</pretty_short>
+  <pretty>10:00 PM EST on February 12, 2014</pretty>
+  <day>12</day>
+  <month>2</month>
+  <year>2014</year>
+  <yday>42</yday>
+  <hour>22</hour>
+  <min>00</min>
+  <sec>0</sec>
+  <isdst>0</isdst>
+  <monthname>February</monthname>
+  <monthname_short>Feb</monthname_short>
+  <weekday_short>Wed</weekday_short>
+  <weekday>Wednesday</weekday>
+  <ampm>PM</ampm>
+  <tz_short>EST</tz_short>
+  <tz_long>America/New_York</tz_long>
+</date>
+					<period>3</period>
+					<high>
+						<fahrenheit>75</fahrenheit>
+						<celsius>24</celsius>
+					</high>
+					<low>
+						<fahrenheit>59</fahrenheit>
+						<celsius>15</celsius>
+					</low>
+					<conditions>Thunderstorm</conditions>
+					
+					<icon>tstorms</icon>
+					<icon_url>http://icons-ak.wxug.com/i/c/k/tstorms.gif</icon_url>
+					<skyicon>cloudy</skyicon>
+					<pop>40</pop>
+					<qpf_allday>
+						<in>0.26</in>
+						<mm>6.6</mm>
+					</qpf_allday>
+					<qpf_day>
+						<in>0.03</in>
+						<mm>0.8</mm>
+					</qpf_day>
+					<qpf_night>
+						<in>0.39</in>
+						<mm>9.9</mm>
+					</qpf_night>
+					<snow_allday>
+						<in>0</in>
+						<cm>0</cm>
+					</snow_allday>
+					<snow_day>
+						<in>0</in>
+						<cm>0</cm>
+					</snow_day>
+					<snow_night>
+						<in>0</in>
+						<cm>0</cm>
+					</snow_night>
+					<maxwind>
+						<mph>15</mph>
+						<kph>24</kph>
+						<dir>SSW</dir>
+						<degrees>212</degrees>
+					</maxwind>
+					<avewind>
+						<mph>11</mph>
+						<kph>18</kph>
+						<dir>SSW</dir>
+						<degrees>199</degrees>
+					</avewind>
+					<avehumidity>79</avehumidity>
+					<maxhumidity>100</maxhumidity>
+					<minhumidity>65</minhumidity>
+				</forecastday>
+				
+				<forecastday>
+					<date>
+  <epoch>1392346800</epoch>
+  <pretty_short>10:00 PM EST</pretty_short>
+  <pretty>10:00 PM EST on February 13, 2014</pretty>
+  <day>13</day>
+  <month>2</month>
+  <year>2014</year>
+  <yday>43</yday>
+  <hour>22</hour>
+  <min>00</min>
+  <sec>0</sec>
+  <isdst>0</isdst>
+  <monthname>February</monthname>
+  <monthname_short>Feb</monthname_short>
+  <weekday_short>Thu</weekday_short>
+  <weekday>Thursday</weekday>
+  <ampm>PM</ampm>
+  <tz_short>EST</tz_short>
+  <tz_long>America/New_York</tz_long>
+</date>
+					<period>4</period>
+					<high>
+						<fahrenheit>61</fahrenheit>
+						<celsius>16</celsius>
+					</high>
+					<low>
+						<fahrenheit>46</fahrenheit>
+						<celsius>8</celsius>
+					</low>
+					<conditions>Mostly Cloudy</conditions>
+					
+					<icon>mostlycloudy</icon>
+					<icon_url>http://icons-ak.wxug.com/i/c/k/mostlycloudy.gif</icon_url>
+					<skyicon>mostlycloudy</skyicon>
+					<pop>10</pop>
+					<qpf_allday>
+						<in>0.16</in>
+						<mm>4.1</mm>
+					</qpf_allday>
+					<qpf_day>
+						<in>0.00</in>
+						<mm>0.0</mm>
+					</qpf_day>
+					<qpf_night>
+						<in>0.00</in>
+						<mm>0.0</mm>
+					</qpf_night>
+					<snow_allday>
+						<in>0</in>
+						<cm>0</cm>
+					</snow_allday>
+					<snow_day>
+						<in>0</in>
+						<cm>0</cm>
+					</snow_day>
+					<snow_night>
+						<in>0</in>
+						<cm>0</cm>
+					</snow_night>
+					<maxwind>
+						<mph>17</mph>
+						<kph>27</kph>
+						<dir>NNW</dir>
+						<degrees>330</degrees>
+					</maxwind>
+					<avewind>
+						<mph>14</mph>
+						<kph>22</kph>
+						<dir>NNW</dir>
+						<degrees>340</degrees>
+					</avewind>
+					<avehumidity>78</avehumidity>
+					<maxhumidity>89</maxhumidity>
+					<minhumidity>75</minhumidity>
 				</forecastday>
 				
 			</forecastdays>
