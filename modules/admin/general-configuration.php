@@ -2,7 +2,7 @@
 
 include_once(ROOT_PATH . '/php/common.php');
 
-if(_GET('update-config-stats', false))
+if(_GET('update-config-stats', false) || _GET('delete-config-key', false))
 {
 	$sql = '';
 	foreach($config as $key => $val)
@@ -33,7 +33,18 @@ if(_GET('submit-new-config', false))
 		'config-key'	=> preg_replace('#[^a-z0-9_-]+#', '', str_replace(' ', '-', _GET('new-config-key', ''))),
 		'config-val'		=> _GET('new-config-val', '')
 	);
-	if($new['config-key'])
+	if(_GET('delete-config-key', false) && $new['config-key'])
+	{echo 'here';
+		if( ! $db->query("DELETE FROM `config` WHERE `key` = '{$new['config-key']}' AND `use_count` < 1"))
+		{
+			$messages[] = new message($db->error);
+		}
+		else
+		{echo 'here 222';
+			unset($config[$new['config-key']]);
+		}
+	}
+	else if($new['config-key'])
 	{
 		$sql = sprintf('INSERT INTO `config` (`key`, `val`) VALUES ("%1$s", "%2$s") ON DUPLICATE KEY UPDATE `val` = VALUES(`val`);',
 			$new['config-key'],
@@ -92,6 +103,9 @@ function edit_config(key, val)
 		
 		<dt>Config Value</dt>
 		<dd><input type="text" class="text" name="new-config-val" id="new-config-val" value=""/></dd>
+		
+		<dt>Delete Config Key</dt>
+		<dd>This will only work if the config key is not used anywhere.<br/><br/><input type="checkbox" class="" name="delete-config-key" id="delete-config-key" value="1"/></dd>
 	</dl>
 	<input type="submit" class="button1" style="float:right; margin:50px 10px 0 0;" name="submit-new-config" value="Update Configuration"/>
 	</fieldset>
