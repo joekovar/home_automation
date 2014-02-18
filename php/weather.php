@@ -20,7 +20,7 @@ class weather
 			$fcttext = (string) weather::$forecast_xml->forecast->txt_forecast->forecastdays->forecastday->fcttext;
 			$fcttext = preg_replace('#(\d+)F#', '$1', $fcttext);
 
-			audio::tts($fcttext);
+			audio::google_tts($fcttext);
 			return true;
 		}
 		return false;
