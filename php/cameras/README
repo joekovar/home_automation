@@ -1,0 +1,4 @@
+Camera module classes should be placed in their own file with the file
+being named after the module (ie - "camera_type.php") camera modules
+must implement the "cameraInterface" interface. "cameraInterface" is
+defined in "php/camera.php".
