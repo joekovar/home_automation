@@ -34,13 +34,13 @@ if(_GET('submit-new-config', false))
 		'config-val'		=> _GET('new-config-val', '')
 	);
 	if(_GET('delete-config-key', false) && $new['config-key'])
-	{echo 'here';
+	{
 		if( ! $db->query("DELETE FROM `config` WHERE `key` = '{$new['config-key']}' AND `use_count` < 1"))
 		{
 			$messages[] = new message($db->error);
 		}
 		else
-		{echo 'here 222';
+		{
 			unset($config[$new['config-key']]);
 		}
 	}

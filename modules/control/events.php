@@ -14,7 +14,7 @@ if(_GET('archive', false))
 			//shell_exec('gzip -9 ' . ROOT_PATH . '/backup/events/*.sql');
 			if($result = $db->query("DELETE FROM `event_log` WHERE `id` < {$obj->id}"))
 			{
-				echo new message("Successfully archived all entries older than ID={$obj->id}");
+				message::display("Successfully archived all entries older than ID={$obj->id}");
 			}
 		}
 		else if(strpos(strtolower($db->error), 'access denied') !== false)

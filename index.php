@@ -36,7 +36,7 @@ $messages = array();
 						{
 							foreach($messages as $val)
 							{
-								echo new message($val);
+								message::display($val);
 							}
 						}
 					?>
