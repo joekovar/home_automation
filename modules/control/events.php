@@ -17,6 +17,14 @@ if(_GET('archive', false))
 				echo new message("Successfully archived all entries older than ID={$obj->id}");
 			}
 		}
+		else if(strpos(strtolower($db->error), 'access denied') !== false)
+		{
+			message::display('Unable to backup events to file. Make sure the MySQL user has the FILE privledge in MySQL administrator.');
+		}
+		else
+		{
+			message::display($db->error);
+		}
 	}
 }
 ?>
@@ -216,7 +224,7 @@ if($result = $db->query('SELECT SQL_CALC_FOUND_ROWS * FROM `event_log` ' . $sql 
 ?>
 
 <h3 class="subtitle">Archiving</h3>
-<form action="/index.php?modules[]=events" method="post">
+<form action="" method="post">
 
 	<div>
 		<p style="clear:left; font-size:small; font-family:Tahoma;">
