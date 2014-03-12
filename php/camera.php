@@ -35,12 +35,15 @@ final class camera
 	
 	public static function modules()
 	{
-		$modules = array();
+		static $modules = array();
 
-		foreach(glob(ROOT_PATH . '/php/cameras/*.php') as $module)
+		if(empty($modules))
 		{
-			$module = substr(basename($module), 0, -4);
-			$modules[$module] = $module;
+			foreach(glob(ROOT_PATH . '/php/cameras/*.php') as $module)
+			{
+				$module = substr(basename($module), 0, -4);
+				$modules[$module] = $module;
+			}
 		}
 		
 		return $modules;
