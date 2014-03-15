@@ -133,7 +133,7 @@ table.events tr td.label {
 }
 table.events tr td.label span.note
 {
-	color:#ddd;
+	color:#999;
 	font-weight:normal;
 }
 table.events tr td.label span.note:before {
