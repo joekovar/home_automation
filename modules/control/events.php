@@ -63,7 +63,7 @@ if(_GET('archive', false))
 	<label for="pin">Pins</label>
 	<select name="pin[]" multiple="multiple" size="6">
 	<?php
-		$result = $db->query('SELECT `pin`, `name` FROM `pin_info` ORDER BY `name` ASC');
+		$result = $db->query('SELECT `pin`, `name` FROM `pin_info` WHERE `implemented` ORDER BY `name` ASC');
 		echo mysqli_utils::options_for_result('pin', 'name', $result);
 	?>
 	</select>
