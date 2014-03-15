@@ -38,7 +38,7 @@ if(_GET('archive', false))
 		$val = array();
 		while($obj = $result->fetch_object())
 		{
-			if(substr($obj->source, 0, 3) == 'IP:')
+			if(substr($obj->source, 0, 3) == 'IP:' && isset($network_map[substr($obj->source, 3)]))
 			{
 				$obj->label = $network_map[substr($obj->source, 3)]->name;
 			}
@@ -214,7 +214,7 @@ if($result = $db->query('SELECT SQL_CALC_FOUND_ROWS * FROM `event_log` ' . $sql 
 			date($config['date-format'], strtotime($obj->event_time)),
 			!empty($pins[$obj->pin]) ? $pins[$obj->pin]->name : 'None',
 			!empty($pins[$obj->pin]) ? ($pins[$obj->pin]->input ? ($obj->pin_state ? 'Close' : 'Open') : ($obj->pin_state ? 'On' : 'Off')) : 'N/A',
-			(substr($obj->source, 0, 3) == 'IP:') ? $network_map[substr($obj->source, 3)]->name : $obj->source,
+			(substr($obj->source, 0, 3) == 'IP:' && isset($network_map[substr($obj->source, 3)])) ? $network_map[substr($obj->source, 3)]->name : $obj->source,
 			$obj->notes
 		);
 	}
