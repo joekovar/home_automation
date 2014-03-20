@@ -20,7 +20,7 @@ body {
 	margin: 0px;
 	padding: 0px;
 	background: url(/style/images/wrapper-bg.png) repeat;
-	font-family: 'Arvo', serif;
+	font-family: Verdana;
 	font-size: 14px;
 	color: #ccc;
 }
@@ -30,7 +30,7 @@ h1, h2, h3 {
 	padding: 0px;
 	text-transform: uppercase;
 	color: #FFFFFF;
-	
+	font-family: 'Arvo', serif;
 }
 
 p, ol, ul {
