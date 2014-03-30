@@ -32,8 +32,8 @@ EthernetClient client;
 #define PREFIX ""
 WebServer webserver(PREFIX, 80);
 
-const int MAX_INPUT_CONTACTS = 4;
-int input_contacts[MAX_INPUT_CONTACTS] = {24, 25, 30, 32};
+const int MAX_INPUT_CONTACTS = 5;
+int input_contacts[MAX_INPUT_CONTACTS] = {24, 25, 30, 32, 34};
 int input_contacts_last[MAX_INPUT_CONTACTS];
 int input_contacts_now[MAX_INPUT_CONTACTS];
 
@@ -235,8 +235,8 @@ void setup()
 {
 	// Setup custom pins\
 	
-	// Door/Window Contacts
-	for(int i = 0; i < 4; i++)
+	// Door/Window Contacts / doorbell
+	for(int i = 0; i < MAX_INPUT_CONTACTS; i++)
         {
           pinMode(input_contacts[i], INPUT_PULLUP);
         }
