@@ -87,7 +87,11 @@ if(_GET('submit-new-project', false))
 if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed` FROM `house_projects` ORDER BY `name` ASC'))
 {
 	$house_stats			= array(
-		'by_year'	=> array()
+		'by_year'			=> array(),
+		'by_year_totals'	=> array(
+			'costs'		=> 0,
+			'projects'	=> 0
+		)
 	);
 	$house_projects		= array();
 	$project_statuses	= array(
@@ -172,6 +176,9 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 				}
 				$house_stats['by_year'][$_Y]['costs'] += $obj->estimated_cost;
 				$house_stats['by_year'][$_Y]['projects']++;
+				
+				$house_stats['by_year_totals']['costs'] += $obj->estimated_cost;
+				$house_stats['by_year_totals']['projects']++;
 			}
 			echo '</table><br class="clearfix"/>';
 		}
@@ -194,8 +201,11 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 		<dt>Materials</dt>
 		<dd><br/><br/>
 			<div style="float:left; width:330px;">Name&nbsp;<input type="text" class="text" style="width:230px;" name="materials[name][]" value=""/></div>
-			<div style="float:left; width:150px;">Cost&nbsp;<input type="text" class="text" style="width:70px;" name="materials[cost][]" value=""/></div>
-			<input type="button" class="button1" style="margin:10px 0 0 150px;" onclick="this.parentNode.parentNode.appendChild(this.parentNode.cloneNode(true)); this.parentNode.removeChild(this);" value="Add More"/>
+			<div style="float:left; width:150px;">
+				Cost&nbsp;<input type="text" class="text" style="width:70px;" name="materials[cost][]" value=""/>
+				<img title="Remove Item" src="./style/img/ico/cross.png" style="cursor:pointer;" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);"/>
+			</div>
+			<input type="button" class="button1" style="margin:10px 0 0 150px;" onclick="add_material_slot(this)" value="Add More"/>
 		</dd>
 	</dl>
 	<br class="clearfix"/>
@@ -218,6 +228,13 @@ foreach($house_stats['by_year'] as $key => $val)
 		'$' . number_format(($val['costs'] + ($val['costs'] * $config['sales-tax-rate'])), 2, '.', ',')
 	);
 }
+printf('<tr><td class="label">%1$s</td><td>%2$s</td><td>%3$s</td><td>%4$s</td><td>%5$s</td></tr>',
+	'Totals',
+	$house_stats['by_year_totals']['projects'],
+	'$' . number_format($house_stats['by_year_totals']['costs'], 2, '.', ','),
+	'$' . number_format(($house_stats['by_year_totals']['costs'] * $config['sales-tax-rate']), 2, '.', ','),
+	'$' . number_format(($house_stats['by_year_totals']['costs'] + ($house_stats['by_year_totals']['costs'] * $config['sales-tax-rate'])), 2, '.', ',')
+);
 
 ?>
 </table>
@@ -272,5 +289,16 @@ function add_materials(project_id)
 			]
 		});
 	});
+}
+
+function add_material_slot(button)
+{
+	var slot = button.parentNode.cloneNode(true);
+	$(slot).find('input[type="text"]').each(function(){
+		$(this).val('');
+	});
+	button.parentNode.parentNode.appendChild(slot);
+	$(slot).find('input[type="text"]:first').focus();
+	button.parentNode.removeChild(button);
 }
 </script>
