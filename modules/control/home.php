@@ -12,5 +12,5 @@
 <h3 class="subtitle">Quick Links</h3>
 <ul class="quick-links">
 	<li><a href="/index.php?modules[]=events&start=today">Today's Events</a></li>
-	<li><a href="https://192.168.0.253:631/jobs?which_jobs=all">Print Jobs</a></li>
+	<?php if( !empty($config['print-server-url'])){printf('<li><a href="%1$s">Print Jobs</a></li>', $config['print-server-url']);} ?>
 </ul>
