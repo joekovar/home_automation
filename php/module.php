@@ -6,6 +6,7 @@ class module
 {
 	public function __construct($name = '')
 	{
+		$current_module = $name;
 		$name		= preg_replace('#[^\.a-z0-9_-]+#', '', strtolower($name));
 
 		if(empty($name))
