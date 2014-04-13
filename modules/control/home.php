@@ -1,16 +1,12 @@
 <?php include_once(ROOT_PATH . '/php/common.php'); ?>
 
-<p>Use the modules listed in the menu on the right side to control and monitor the house.</p>
-<p><strong>Control Modules</strong> are for turning things off/on and adjusting settings related to those specific modules.</p>
-<p><strong>Statistics Modules</strong> are for looking at statistics related to just about anything in the system.</p>
-<p><strong>Admin Modules</strong> are typically system-wide settings such as the format used to display dates, manual configuration editing, etc.</p>
-
 <?php
-	echo '<p>Today\'s low/high temperatures: ' . weather::today_low() . 'F/' . weather::today_high() . 'F</p>';
+	printf('<p>%1$s</p>', date($config['date-format'], time()));
+	printf('<p>Today\'s low/high temperatures: %1$sF / %2$sF</p>', weather::today_low(), weather::today_high());
 ?>
 
 <h3 class="subtitle">Quick Links</h3>
 <ul class="quick-links">
-	<li><a href="/index.php?modules[]=events&start=today">Today's Events</a></li>
+	<?php if( !empty($config['events-module-name'])){printf('<li><a href="./index.php?start=today&modules[]=%1$s">Today\'s Events</a></li>', $config['events-module-name']);} ?>
 	<?php if( !empty($config['print-server-url'])){printf('<li><a href="%1$s">Print Jobs</a></li>', $config['print-server-url']);} ?>
 </ul>
