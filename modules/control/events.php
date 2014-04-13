@@ -2,6 +2,18 @@
 
 include_once(ROOT_PATH . '/php/common.php');
 
+if(empty($config['events-module-name']) || $config['events-module-name'] != $current_module)
+{
+	$sql = sprintf('INSERT INTO `config` (`key`, `val`) VALUES ("%1$s", "%2$s") ON DUPLICATE KEY UPDATE `val` = VALUES(`val`);',
+		'events-module-name',
+		$db->real_escape_string($current_module)
+	);
+	if( ! $db->query($sql))
+	{
+		$messages[] = new message($db->error);
+	}
+}
+
 global $network_map;
 
 if(_GET('archive', false))
