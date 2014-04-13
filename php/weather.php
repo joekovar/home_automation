@@ -52,7 +52,7 @@ class weather
 		}
 		global $config;
 		
-		if( ! @filemtime(ROOT_PATH . weather::$forecast_cache) || (time() - @filemtime(ROOT_PATH . weather::$forecast_cache) >= 86400))
+		if($skip_cache || (! @filemtime(ROOT_PATH . weather::$forecast_cache)) || (date('Ymd', @filemtime(ROOT_PATH . weather::$forecast_cache)) < date('Ymd')))
 		{
 			if($xml = file_get_contents(sprintf(weather::$forecast_url, $config['wunderground-api-key'], $config['wunderground-api-location'])))
 			{
