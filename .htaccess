@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^mobile$ mobile.php [L,QSA]
