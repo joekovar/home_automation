@@ -84,7 +84,7 @@ if(_GET('submit-new-project', false))
 	}
 }
 
-if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed` FROM `house_projects` ORDER BY `name` ASC'))
+if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed` FROM `house_projects` ORDER BY `last_action` DESC'))
 {
 	$house_stats			= array(
 		'by_year'			=> array(),
