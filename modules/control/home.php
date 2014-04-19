@@ -3,6 +3,16 @@
 <?php
 	printf('<p>%1$s</p>', date($config['date-format'], time()));
 	printf('<p>Today\'s low/high temperatures: %1$sF / %2$sF</p>', weather::today_low(), weather::today_high());
+	if($result = $db->query('SELECT COUNT(`id`) AS `total` FROM `maintenance_items` WHERE DATEDIFF(DATE_ADD(`last_performed`, INTERVAL `interval_days` DAY), CURRENT_DATE()) <= ' . $config['upcomming-maintenance-days']))
+	{
+		if($obj = $result->fetch_object())
+		{
+			if($obj->total > 0)
+			{
+				printf('<p>Upcomming / Past Due Maintence Items: <strong>%1$s</strong></p>', $obj->total);
+			}
+		}
+	}
 ?>
 
 <h3 class="subtitle">Quick Links</h3>
