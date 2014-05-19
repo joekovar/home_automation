@@ -32,6 +32,19 @@ switch($action)
 					{
 						$val = explode('-', $val);
 						add_log('Pin state changed', "IP:{$_SERVER['REMOTE_ADDR']}", (int)$val[0], (int)$val[1]);
+						
+						if($config['doorbell-enabled'] && (int)$val[0] == 34 && (int)$val[1] == 1) // doorbell is pressed
+						{
+							if($result = $db->query('SELECT `module`, `attributes` FROM `cameras` WHERE `id` = 1'))
+							{
+								if($obj = $result->fetch_object())
+								{
+									$camera = new camera($obj->module, $obj->attributes);
+									rename(ROOT_PATH . '/' . $camera->screenshot(), ROOT_PATH . '/cache/cameras/doorbell/' . time() . '.jpg');
+								}
+							}
+							audio::google_tts('There is someone at the front door.');
+						}
 					}
 				}
 			}
