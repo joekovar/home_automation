@@ -35,6 +35,7 @@ if($result = $db->query('SELECT * FROM `config`'))
 	}
 	$result->close();
 }
+$config = new config($config);
 
 $pins = array();
 if($result = $db->query('SELECT * FROM `pin_info` ORDER BY `name` ASC'))
