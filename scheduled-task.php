@@ -160,4 +160,11 @@ if($xml = new SimpleXMLElement(file_get_contents('http://' . ARDUINO_IP . '/humi
 /*
 $db->query("DELETE FROM `climate_log` WHERE `log_time` < ('" . MYSQL_NOW . "' - INTERVAL {$config['climate-log-archive-interval']})");
 */
+
+// Delete old doorbell photos
+if($config['doorbell-auto-delete-days'])
+{
+	shell_exec('find ' . ROOT_PATH . '/cache/cameras/doorbell/*.jpg -mtime +' . $config['doorbell-auto-delete-days'] . ' -exec rm {} \; > /dev/null 2>/dev/null &');
+}
+
 ?>
