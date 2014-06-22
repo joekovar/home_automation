@@ -17,7 +17,7 @@ if($key = scandir('/home'))
 			if($size = shell_exec("du -sb /home/$val 2>/dev/null"))
 			{
 				preg_match('/^\d+/', $size, $size);
-				printf('<tr><td class="label">%1$s</td><td>%2$s</td></tr>', $val, new large_filesize($size[0]));
+				printf('<tr><td class="label"><a href="/~%1$s/">%1$s</a></td><td>%2$s</td></tr>', $val, new large_filesize($size[0]));
 			}
 		}
 		echo '</table>';
