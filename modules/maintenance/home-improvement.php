@@ -132,7 +132,7 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 
 		if( !empty($project_statuses['active']))
 		{
-			echo '<form action="" method="post"><h3 class="subtitle" id="active-projects" style="">Active Projects</h3><table class="events" cellpadding="3"><tr><th>Last Action</th><th>Cost</th><th>Tools</th><th>Mark</th></tr>';
+			echo '<form action="" method="post"><h3 class="subtitle" id="active-projects" style="">Active Projects</h3><table class="events" cellpadding="3"><tr><th>Last Action</th><th><abbr title="Excluding Tax">Current Costs</abbr></th><th>Tools</th><th>Mark</th></tr>';
 			foreach($project_statuses['active'] as $key => $obj)
 			{
 				printf('<tr><td colspan="5" class="label">%1$s <span class="note">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td><td>%7$s</td></tr>',
@@ -151,7 +151,7 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 
 		if( !empty($project_statuses['completed']))
 		{
-			echo '<h3 class="subtitle" id="completed-projects" style="">Completed Projects</h3><table class="events" cellpadding="3"><tr><th>Date Completed</th><th>Cost</th><th>Tools</th></tr>';
+			echo '<h3 class="subtitle" id="completed-projects" style="">Completed Projects</h3><table class="events" cellpadding="3"><tr><th>Date Completed</th><th><abbr title="Excluding Tax">Total Costs</abbr></th><th>Tools</th></tr>';
 			foreach($project_statuses['completed'] as $key => $obj)
 			{
 				printf('<tr><td colspan="3" class="label">%1$s <span class="note">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td></tr>',
