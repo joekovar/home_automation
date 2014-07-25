@@ -37,7 +37,7 @@ for($i = count($screenshots) - 1; $i > -1; $i--)
 {
 	if(substr($screenshots[$i], -3, 3) == 'jpg')
 	{
-		$screenshot_date = date($config['date-only-format'], basename($screenshots[$i]));
+		$screenshot_date = date($config['date-only-format'], (int)basename($screenshots[$i]));
 		if($screenshot_date != $last_screenshot_date)
 		{
 			$last_screenshot_date = $screenshot_date;
@@ -46,7 +46,7 @@ for($i = count($screenshots) - 1; $i > -1; $i--)
 
 		printf('<div style="width:180px; float:left; margin:5px 0 0 2px;"><h6 style="padding:0; margin:0 0 3px 2px;">%2$s</h6><img style="width:180px; cursor:pointer;" src="cache/cameras/doorbell/%1$s" onclick="%3$s"/></div>',
 			$screenshots[$i],
-			date($config['date-format'], basename($screenshots[$i])),
+			date($config['date-format'], (int)basename($screenshots[$i])),
 			"$('<div><img src=\'' + this.src + '\' style=\'margin:10px;\'/></div>').dialog({width:780})"
 		);
 	}
