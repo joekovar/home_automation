@@ -66,6 +66,22 @@ switch(_GET('mode', ''))
 		}
 	break;
 	
+	case 'edit-notes':
+		$sql = sprintf('UPDATE `house_projects` SET `notes` = "%1$s", `last_action` = `last_action` WHERE `id` = %2$s',
+			$db->real_escape_string(_GET('notes')),
+			(int)_GET('project_id')
+		);
+		if($db->query($sql))
+		{
+			message::display('Updated notes successfully');
+		}
+		else
+		{
+			message::display($db->error);
+			message::display($sql);
+		}
+	break;
+	
 	default:
 		echo 'unknown mode';
 	break;

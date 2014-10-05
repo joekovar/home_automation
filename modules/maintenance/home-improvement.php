@@ -140,7 +140,8 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 					date($config['date-only-format'], $obj->last_action),
 					'$' . number_format($obj->estimated_cost, 2, '.', ','), // cost
 					'', //sprintf('%1$s/%2$s', $obj->materials_obtained, $obj->material_count), // materials obtained
-						'<img title="Add Materials/Costs" src="./style/img/ico/cart_put.png" style="cursor:pointer;" onclick="add_materials(' . $obj->id . ')"/>'
+						'<img title="Edit Notes" src="./style/img/ico/comments.png" style="cursor:pointer;" onclick="edit_notes(' . $obj->id . ',\'' . $obj->name . '\', \'' . $obj->notes . '\')"/>'
+						. '<img title="Add Materials/Costs" src="./style/img/ico/cart_put.png" style="cursor:pointer;" onclick="add_materials(' . $obj->id . ')"/>'
 						. '<img title="View Materials/Costs" src="./style/img/ico/cart.png" style="cursor:pointer;" onclick="view_materials(' . $obj->id . ', \'' . $obj->name . '\')"/>',
 					$obj->notes,
 					sprintf('<input type="checkbox" name="project[%1$s]" value="%1$s"/>', $obj->id)
@@ -159,7 +160,8 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 					date($config['date-only-format'], $obj->last_action),
 					'$' . number_format($obj->estimated_cost, 2, '.', ','), // cost
 					'', // materials obtained
-						'<img title="Add Materials/Costs" src="./style/img/ico/cart_put.png" style="cursor:pointer;" onclick="add_materials(' . $obj->id . ')"/>'
+						'<img title="Edit Notes" src="./style/img/ico/comments.png" style="cursor:pointer;" onclick="edit_notes(' . $obj->id . ',\'' . $obj->name . '\', \'' . $obj->notes . '\')"/>'
+						. '<img title="Add Materials/Costs" src="./style/img/ico/cart_put.png" style="cursor:pointer;" onclick="add_materials(' . $obj->id . ')"/>'
 						. '<img title="View Materials/Costs" src="./style/img/ico/cart.png" style="cursor:pointer;" onclick="view_materials(' . $obj->id . ', \'' . $obj->name . '\')"/>'
 						. '<img title="Change Completion Date" src="./style/img/ico/calendar_edit.png" style="cursor:pointer;" onclick="backdate(' . $obj->id . ', \'' . $obj->name . '\')"/>', // tool buttons
 					$obj->notes,
@@ -262,6 +264,22 @@ function backdate(project_id, project_name)
 			buttons: [
 				{text: "Update", click: function(){
 					$('<div></div>').load("./action.php?action=home-improvement&mode=backdate&project_id=" + project_id + "&new_date=" + _dialog.find('#new-project-date').val()).dialog();
+					_dialog.dialog("close");
+				}}
+			]
+		});
+}
+
+function edit_notes(project_id, project_name, project_notes)
+{
+	var _dialog = $('<div>Notes<br/><textarea id="notes-editor" rows="4" cols="50">' + project_notes + '</textarea></div>');
+	_dialog.dialog({
+			width: 500,
+			title: 'Notes Editor: ' + project_name,
+			modal: true,
+			buttons: [
+				{text: "Update", click: function(){
+					$('<div></div>').load("./action.php?action=home-improvement&mode=edit-notes&project_id=" + project_id + "&notes=" + escape(_dialog.find('#notes-editor').val())).dialog({title:"Info"});
 					_dialog.dialog("close");
 				}}
 			]
