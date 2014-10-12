@@ -35,6 +35,13 @@ switch(_GET('mode', ''))
 		}
 	break;
 	
+	case 'play-message':
+		if(@$config['audio-enabled'])
+		{
+			audio::google_tts($config['doorbell-message']);
+		}
+	break;
+	
 	default:
 		message::display('Unknown mode');
 	break;

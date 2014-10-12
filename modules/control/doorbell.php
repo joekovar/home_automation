@@ -32,7 +32,8 @@ function update_message(message, old)
 			?>
 		</select>
 	</td></tr>
-	<tr><td class="label">Message</td><td>
+	<tr><td class="label">
+		<?php if(@$config['audio-enabled']){ ?><img title="Play message" alt="Play message" src="./style/img/ico/sound.png" style="float:right; cursor:pointer;" onclick="$('<div></div>').load('./action.php?action=doorbell&mode=play-message');"/><?php } ?>Message</td><td>
 		<input type="text" class="text" value="<?php echo $config['doorbell-message']; ?>" onblur="update_message(this.value, '<?php echo $config['doorbell-message']; ?>');"/>
 	</td></tr>
 	
