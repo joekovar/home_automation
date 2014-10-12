@@ -24,6 +24,17 @@ switch(_GET('mode', ''))
 		}
 	break;
 	
+	case 'update-message':
+		if($db->query('INSERT INTO `config` (`key`, `val`) VALUES ("doorbell-message", "' . $db->real_escape_string(_GET('message', '')) . '") ON DUPLICATE KEY UPDATE `val` = VALUES(`val`)'))
+		{
+			message::display('Successfully changed doorbell message.');
+		}
+		else
+		{
+			message::display($db->error);
+		}
+	break;
+	
 	default:
 		message::display('Unknown mode');
 	break;

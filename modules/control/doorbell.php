@@ -6,7 +6,13 @@ if(empty($config['doorbell-message']))
 ?>
 <p>Doorbell control</p>
 <script type="text/javascript">
-
+function update_message(message, old)
+{
+	if(message != old)
+	{
+		$('<div></div>').load('./action.php?action=doorbell&mode=update-message&message=' + escape(message)).dialog();
+	}
+}
 </script>
 <table class="config">
 	<tr><td class="label">Doorbell</td><td>
@@ -25,6 +31,9 @@ if(empty($config['doorbell-message']))
 			}
 			?>
 		</select>
+	</td></tr>
+	<tr><td class="label">Message</td><td>
+		<input type="text" class="text" value="<?php echo $config['doorbell-message']; ?>" onblur="update_message(this.value, '<?php echo $config['doorbell-message']; ?>');"/>
 	</td></tr>
 	
 </table>
