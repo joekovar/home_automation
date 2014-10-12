@@ -6,9 +6,10 @@ if($xml = file_get_contents('http://' . ARDUINO_IP . '/status'))
   if($xml = new SimpleXMLElement($xml))
   {
     $status = $xml->attributes();
-    printf('<tr><td class="label">Free RAM</td><td>%1$s bytes</td></tr><tr><td class="label">Arduino millis()</td><td >%2$s</td></tr>',
+    printf('<tr><td class="label">Free RAM</td><td>%1$s bytes</td></tr><tr><td class="label">Arduino millis()</td><td >%2$s</td></tr><tr><td class="label">Sketch Version</td><td >%3$s</td></tr>',
       $status['freeram'],
-      elapsed_time(bcdiv($status['millis'], 1000), false)
+      elapsed_time(bcdiv($status['millis'], 1000), false),
+      $status['version']
     );
   }
 }

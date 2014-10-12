@@ -6,6 +6,7 @@
 		SD Card on pin 4
 */
 
+#define VERSION "1.0"
 
 #include "SPI.h"
 #include "avr/pgmspace.h"
@@ -201,7 +202,7 @@ void status(WebServer &server, WebServer::ConnectionType type, char *url_tail, b
 		
 	server.httpSuccess("text/xml");
 	
-	server << F("<status freeram=\"") << freeRam() << F("\" millis=\"") << millis() << F("\"/>");
+	server << F("<status version=\"") << VERSION << F(" freeram=\"") << freeRam() << F("\" millis=\"") << millis() << F("\"/>");
 }
 
 void pinsXML(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
