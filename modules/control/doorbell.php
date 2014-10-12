@@ -1,12 +1,12 @@
+<?php
+if(empty($config['doorbell-message']))
+{
+	$config['doorbell-message'] = 'There is someone at the front door.';
+}
+?>
 <p>Doorbell control</p>
 <script type="text/javascript">
-function toggle_garage()
-{
-	var xml = $('<div/>').load("./action.php?action=toggle-garage");
-	var is_open = $('#garage-door-opener').val() == 'Open Garage Door' ? false : true;
-	$('#garage-door-opener').val(is_open ? 'Close Garage Door' : 'Open Garage Door');
-	$('#garage-door-state').html(is_open ? 'Open' : 'Closed');
-}
+
 </script>
 <table class="config">
 	<tr><td class="label">Doorbell</td><td>

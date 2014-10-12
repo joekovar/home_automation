@@ -43,7 +43,11 @@ switch($action)
 									rename(ROOT_PATH . '/' . $camera->screenshot(), ROOT_PATH . '/cache/cameras/doorbell/' . time() . '.jpg');
 								}
 							}
-							audio::google_tts('There is someone at the front door.');
+							if(empty($config['doorbell-message']))
+							{
+								$config['doorbell-message'] = 'There is someone at the front door.';
+							}
+							audio::google_tts($config['doorbell-message']);
 						}
 					}
 				}
