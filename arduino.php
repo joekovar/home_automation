@@ -66,9 +66,30 @@ switch($action)
 		}
 	break;
 	
+	case 'water-heater':
+		if(IS_ARDUINO)
+		{
+			if((int)_GET('status', -1) > -1)
+			{
+				if( ! $db->query("INSERT INTO `climate_log` (`pin`, `type`, `reading`, `analog`) VALUES (0, 'water-heater', " . (int)_GET('status') . ", 1)"))
+				{
+					add_log('Water heater logging failed', 'arduino.php');
+				}
+			}
+			else
+			{
+				add_log('Missing water heater status argument.', "IP:{$_SERVER['REMOTE_ADDR']}");
+			}
+		}
+		else
+		{
+			add_log('Water heater status change from unknown source.', "IP:{$_SERVER['REMOTE_ADDR']}");
+		}
+	break;
+	
 	default:
 		// something's broken
-		add_log('Actionless request to arduino.php ', $_SERVER['REMOTE_ADDR']);
+		add_log('Actionless request to arduino.php ', "IP:{$_SERVER['REMOTE_ADDR']}");
 	break;
 }
 
