@@ -8,7 +8,7 @@ switch(_GET('mode', ''))
 			echo '<table class="events" cellpadding="3"><tr><th>Name</th><th>Cost</th></tr>';
 			while($obj = $result->fetch_object())
 			{
-				printf('<tr><td class="label">%3$s</td><td>%4$s</td></tr>',
+				printf('<tr><td class="label" title="%1$s">%3$s</td><td>%4$s</td></tr>',
 					$obj->id,
 					$obj->project_id,
 					$obj->name,

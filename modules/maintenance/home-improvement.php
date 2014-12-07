@@ -135,7 +135,7 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 			echo '<form action="" method="post"><h3 class="subtitle" id="active-projects" style="">Active Projects</h3><table class="events" cellpadding="3"><tr><th>Last Action</th><th><abbr title="Excluding Tax">Current Costs</abbr></th><th>Tools</th><th>Mark</th></tr>';
 			foreach($project_statuses['active'] as $key => $obj)
 			{
-				printf('<tr><td colspan="5" class="label">%1$s <span class="note">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td><td>%7$s</td></tr>',
+				printf('<tr><td colspan="5" class="label">%1$s <span class="note" contentEditable="true">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td><td>%7$s</td></tr>',
 					$obj->name,
 					date($config['date-only-format'], $obj->last_action),
 					'$' . number_format($obj->estimated_cost, 2, '.', ','), // cost
@@ -155,7 +155,7 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 			echo '<h3 class="subtitle" id="completed-projects" style="">Completed Projects</h3><table class="events" cellpadding="3"><tr><th>Date Completed</th><th><abbr title="Excluding Tax">Total Costs</abbr></th><th>Tools</th></tr>';
 			foreach($project_statuses['completed'] as $key => $obj)
 			{
-				printf('<tr><td colspan="3" class="label">%1$s <span class="note">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td></tr>',
+				printf('<tr><td colspan="3" class="label">%1$s <span contentEditable="true" class="note">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td></tr>',
 					$obj->name,
 					date($config['date-only-format'], $obj->last_action),
 					'$' . number_format($obj->estimated_cost, 2, '.', ','), // cost
@@ -319,4 +319,13 @@ function add_material_slot(button)
 	$(slot).find('input[type="text"]:first').focus();
 	button.parentNode.removeChild(button);
 }
+
+$('*[contentEditable="true"]').focus(function(){
+	this.oldText = this.innerText;
+}).blur(function(){
+	if(this.oldText != this.innerText)
+	{
+		return
+	}
+});
 </script>
