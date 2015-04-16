@@ -46,7 +46,7 @@ function new_sprinkler_schedule(pin)
 					_dialog.find('input[type="checkbox"]:checked').each(function(){
 						dow += parseInt($(this).val());
 					});
-					$('<div></div>').load("./action.php?action=add-schedule&state=1&pin=" + pin + "&dow=" + dow + "&start=" + escape($("#watering-start-time").val()) + "&length=" + escape($("#watering-length").val())).dialog();
+					$('<div></div>').load("./action.php?action=add-schedule&state=0&pin=" + pin + "&dow=" + dow + "&start=" + escape($("#watering-start-time").val()) + "&length=" + escape($("#watering-length").val())).dialog();
 					_dialog.dialog("close");
 				}}
 			]
@@ -85,7 +85,7 @@ if($result = $db->query('SELECT `pin_id` FROM `pin_relations` WHERE `group_id` =
 
 foreach($sprinklers as $key => $val)
 {
-	if(($result = $db->query('SELECT `event_time` FROM `event_log` WHERE `pin_state` = 1 AND `pin` = ' . $key . ' ORDER BY `event_time` DESC LIMIT 1')) && $obj = $result->fetch_object())
+	if(($result = $db->query('SELECT `event_time` FROM `event_log` WHERE `pin_state` = 0 AND `pin` = ' . $key . ' ORDER BY `event_time` DESC LIMIT 1')) && $obj = $result->fetch_object())
 	{
 		$sprinklers[$key]->last_run = $obj->event_time;
 	}
@@ -107,7 +107,7 @@ foreach($sprinklers as $key => $val)
 {
 	printf('<tr><td class="label">%1$s</td><td style="text-align:center">%3$s</td><td><input type="button" class="button1 lefty-button2" title="Turn %2$s" onclick="toggle_sprinkler(%4$s, this)" value="Turn %2$s"/></td></tr>',
 		$val->name,
-		$val->state ? 'Off' : 'On',
+		$val->state ? 'On' : 'Off',
 		$val->last_run ? date($config['date-format'], strtotime($val->last_run)) : 'Unknown',
 		$val->pin
 	);

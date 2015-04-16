@@ -1,7 +1,7 @@
 <?php
 
 $pin			= (int)_GET('pin');
-$pin_state		= (bool)_GET('state');
+$pin_state		= (int)_GET('state');
 $dow 		= (int)_GET('dow');
 $start 		= _GET('start');
 $length	= _GET('length');
@@ -27,6 +27,7 @@ if($pin > 0 && $pin < 54 && !empty($pins[$pin]))
 		}
 	}
 }
+print_pre($_GET);
 message::display('Fail');
 
 ?>

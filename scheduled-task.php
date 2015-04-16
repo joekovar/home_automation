@@ -6,11 +6,11 @@ include_once(ROOT_PATH . '/php/common.php');
 //
 // Close garage door
 //
-if(date('G:i', strtotime($config['garage-auto-close-time'])) == date('G:i'))
+if(!empty($config['garage-auto-close-time']) && date('G:i', strtotime($config['garage-auto-close-time'])) == date('G:i'))
 {
-	if(get_pin_states() &&  @$pins[25]->state == 0)
+	if(get_pin_states() &&  @$pins[25]->state == 1)
 	{
-		$xml = @file_get_contents('http://' . ARDUINO_IP . '/outputs?39=1');
+		$xml = @file_get_contents('http://' . ARDUINO_IP . '/outputs?39=0');
 		add_log("Garage Car Door closed automatically", 'scheduled-task', 39, 2);
 	}
 }
@@ -29,7 +29,7 @@ if($result = $db->query('SELECT id, pin, pin_state FROM `pin_schedule`
 		if($db->query("UPDATE `pin_schedule` SET `started` = 0 WHERE `id` = {$obj->id}"))
 		{
 			add_log("Stopped schedule #{$obj->id}", 'scheduled-task', $obj->pin, !$obj->pin_state);
-			$arduino_url .= "&{$obj->pin}=" . (!$obj->pin_state);
+			$arduino_url .= "&{$obj->pin}=" . ($obj->pin_state ? '0' : '1');
 		}
 	}
 	
@@ -65,7 +65,7 @@ if($result = $db->query("SELECT * FROM `pin_schedule`
 			else if($db->query('UPDATE `pin_schedule` SET `started` = ' . time() . ' WHERE id = ' . $obj->id))
 			{
 				add_log("Started schedule #{$obj->id}", 'scheduled-task', $obj->pin, $obj->pin_state);
-				$arduino_url .= "&{$obj->pin}={$obj->pin_state}";
+				$arduino_url .= "&{$obj->pin}=" . ($obj->pin_state ? '1' : '0');
 			}
 		}
 	}
@@ -160,6 +160,23 @@ if($xml = new SimpleXMLElement(file_get_contents('http://' . ARDUINO_IP . '/humi
 /*
 $db->query("DELETE FROM `climate_log` WHERE `log_time` < ('" . MYSQL_NOW . "' - INTERVAL {$config['climate-log-archive-interval']})");
 */
+
+$water_heater_archive_time = mktime(0, 0, 0, (date('n') - 1), 1, date('Y'));
+if($water_heater_archive_time > (int)@$config['water-heater-archive-time'])
+{
+	if($db->query('UPDATE `climate_log`
+		SET `archived` = 1
+		WHERE `archived` = 0
+			AND `type` = "water-heater"
+			AND `log_time` < FROM_UNIXTIME(' . $water_heater_archive_time . ')'))
+	{
+		$config['water-heater-archive-time'] = $water_heater_archive_time;
+	}
+	else
+	{
+		add_log('Climate archiving failure', 'scheduled task');
+	}
+}
 
 // Delete old doorbell photos
 if($config['doorbell-auto-delete-days'])

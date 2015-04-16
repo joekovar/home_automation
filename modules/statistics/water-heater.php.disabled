@@ -1,0 +1,205 @@
+<p>Water heater run times.</p>
+
+<?php
+
+include_once(ROOT_PATH . '/php/common.php');
+
+function runtime($seconds = 0)
+{
+	if($seconds < 86401)
+	{
+		return gmdate('H:i:s', $seconds);
+	}
+	return floor($seconds / 3600) . ':' . gmdate('i:s', ($seconds % 3600));
+}
+
+
+class water_heater_stats
+{
+	public
+		$turn_ons		= 0,
+		$turn_offs		= 0,
+		$state_errors	= 0,
+		$runtime		= 0,
+		$lost_time		= 0,
+		$longest		= 0,
+		$shortest		= 1000000,
+		$hours			= array(),
+		$days			= array(),
+		$instance		= 0;
+	
+	public static $_instance = 0;
+	
+	protected
+		$start, $end, $last_reading = null, $last_log_time = null;
+	
+	public function __construct($start, $end)
+	{
+		$this->start	= $start;
+		$this->end		= $end;
+		$this->hours	= array_fill_keys(range(0, 23), 0);
+		$this->instance	= water_heater_stats::$_instance++;
+	}
+	
+	public function start(){return $this->start;}
+	public function end(){return $this->end;}
+	public function last_reading(){return $this->last_reading;}
+	
+	public function log($log_time, $reading)
+	{
+		if($this->last_reading === 1)
+		{
+			if($reading == 0)
+			{
+				$this->last_reading = 0;
+				$this->turn_offs++;
+
+				$runtime = $log_time - $this->last_log_time;
+
+				if($runtime > 0)
+				{
+					if($runtime < $this->shortest)
+					{
+						$this->shortest = $runtime;
+					}
+					if($runtime > $this->longest)
+					{
+						$this->longest = $runtime;
+					}
+					$this->runtime += $runtime;
+					
+					$hour		= date('G', $log_time);
+					$last_hour	= date('G', $this->last_log_time);
+					
+					$this->hours[($hour == $last_hour) ? $hour : $last_hour] += $runtime;
+				}
+				
+				$this->last_log_time = $log_time;
+			}
+			else if($reading == 1)
+			{
+				$this->turn_ons++;
+				$this->state_errors++;
+				$this->lost_time += $log_time - $this->last_log_time;
+			}
+		}
+		else if($this->last_reading === 0)
+		{
+			if($reading == 1)
+			{
+				$this->last_reading	= 1;
+				$this->turn_ons++;
+				$this->last_log_time = $log_time;
+			}
+			else if($reading == 0)
+			{
+				$this->turn_offs++;
+				$this->state_errors++;
+				$this->lost_time += $log_time - $this->last_log_time;
+			}
+		}
+		else if($reading == 1)
+		{
+			$this->turn_ons++;
+			$this->last_reading		= 1;
+			$this->last_log_time	= $log_time;
+		}
+	}
+	
+	public function __toString()
+	{
+		global $config;
+		
+		$hours = '';
+		foreach($this->hours as $key => $val)
+		{
+			if($this->runtime > 0)
+			{
+				$hours .= '<div style="float:left; display:block; background:#666; margin-left:1px; width:23px; height:' . max(1, round(($val / $this->runtime) * 400)) . 'px"></div>';
+			}
+		}
+
+		$str = '<table style="color:#fff; font-size:small; text-align:center; width:100%" cellpadding="3px;">'
+			. '<tr><th>On</th><th>Off</th><th>Errors</th><th>Runtime</th><th>Lost Time</th></tr>';
+		
+		$str .= sprintf('<tr style="background:#111;"><td>%1$s</td><td>%2$s</td><td>%3$s</td><td>%4$s</td><td>%6$s</td></tr><tr style="text-align:center; background:#000; color:#04969c;"><td colspan="5">%5$s</td></tr>',
+			$this->turn_ons,
+			$this->turn_offs,
+			$this->state_errors,
+			runtime($this->runtime),
+			"<span style='float:right;'>11:59PM</span><span style='float:left;'>12:01AM</span>Noon<div>{$hours}</div>",
+			runtime($this->lost_time)
+		);
+		$str .= '</table>';
+		
+		return $str;
+	}
+}
+
+$cost = 0.12 * 4.5;
+
+//echo date('r', mktime(0, 0, 0, date('n'), 1, date('Y')));
+
+$starts			= new stdClass;
+$starts->month	= mktime(0, 0, 0, date('n'), 1, date('Y'));
+$starts->last_month	= strtotime('first day of last month', $starts->month);
+$starts->week	= date('l') == 'Monday' ? strtotime('today') : strtotime('last monday');
+$starts->day	= strtotime('today');
+
+$ends = new stdClass;
+$ends->month = strtotime('+1 month', $starts->month);
+$ends->last_month = strtotime('+1 month', $starts->last_month);
+$ends->week = strtotime('+7 days', $starts->week);
+$ends->day = strtotime('+24 hours', $starts->day);
+
+foreach($starts as $key => $val)
+{
+	echo date('r', $val) . ' -- ' . date('r', $ends->$key) . ' (' . $key . ')<br>';
+}
+
+
+
+$sql = 'SELECT `reading`, UNIX_TIMESTAMP(`log_time`) AS `log_time`
+	FROM `climate_log`
+	WHERE `archived` = 0
+		AND `type` = "water-heater"
+		AND UNIX_TIMESTAMP(`log_time`) > ' . ($starts->last_month - 1) . '
+	ORDER BY `log_time` ASC';
+
+if($result = $db->query($sql))
+{
+	// $s->runtime->day = runtime($s->runtime->day) . ' ($' . number_format($cost * ($s->runtime->day / 3600), 2) . ')';
+	
+	$last_month	= new water_heater_stats($starts->last_month, $ends->last_month);
+	$month		= new water_heater_stats($starts->month, $ends->month);
+	$week		= new water_heater_stats($starts->week, $ends->week);
+	$day		= new water_heater_stats($starts->day, $ends->day);
+	
+	while($obj = $result->fetch_object())
+	{
+		if($obj->log_time < $starts->month)
+		{
+			$last_month->log($obj->log_time, $obj->reading);
+		}
+		else
+		{
+			$month->log($obj->log_time, $obj->reading);
+		}
+
+		if($obj->log_time >= $starts->week)
+		{
+			$week->log($obj->log_time, $obj->reading);
+		}
+		
+		if($obj->log_time >= $starts->day)
+		{
+			$day->log($obj->log_time, $obj->reading);
+		}
+	}
+	
+	message::display('Water heater is currently ' . ($day->last_reading() ? 'On' : 'Off'));
+	
+	echo "<h3>Today</h3>{$day}<h3>Week</h3>{$week}<h3>This Month</h3>{$month}<h3>Last Month</h3>{$last_month}";
+}
+
+?>

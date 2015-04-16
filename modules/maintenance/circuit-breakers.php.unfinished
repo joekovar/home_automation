@@ -1,0 +1,206 @@
+<?php
+
+include_once(ROOT_PATH . '/php/common.php');
+
+if( _GET('submit-new-panel', false))
+{
+	if($result = $db->query(sprintf('INSERT INTO `electrical_panels` (`name`, `location`, `slots`, `circuits`, `notes`) VALUES ("%1$s", "%2$s", %3$s, %4$s, "%5$s")',
+		$db->real_escape_string(_GET('panel-name')),
+		$db->real_escape_string(_GET('panel-location')),
+		(int)_GET('panel-slots', 1),
+		(int)_GET('panel-circuits', 1),
+		$db->real_escape_string(_GET('panel-notes'))
+	)))
+	{
+		message::display('Added new electrical panel successfully');
+	}
+}
+
+if(_GET('submit-panel-delete', false))
+{
+	if( !empty($_POST['panel']) && is_array($_POST['panel']))
+	{
+		foreach($_POST['panel'] as $key => $val)
+		{
+			$_POST['panel'][$key] = (int)$val;
+			if($_POST['panel'][$key] <= 0)
+			{
+				unset($_POST['panel'][$key]);
+			}
+		}
+		if( !empty($_POST['panel']))
+		{
+			if($db->query('DELETE FROM `electrical_panels` WHERE `id` IN (' . implode(',', $_POST['panel']) . ')'))
+			{
+				message::display('Successfully deleted selected panels');
+			}
+		}
+	}
+	else
+	{
+		message::display('No panels selected.');
+	}
+}
+
+
+$electrical_panels		= array();
+$electrical_breakers	= array();
+
+$electrical_panels[0]					= new stdClass;
+$electrical_panels[0]->name			= 'Orphan Circuits';
+$electrical_panels[0]->location		= 'Unknown';
+$electrical_panels[0]->slots			= '&infin;';
+$electrical_panels[0]->circuits		= '&infin;';
+$electrical_panels[0]->breakers	= array();
+$electrical_panels[0]->notes			= 'Circuits that were attached to deleted panels, and not reassigned to another panel';
+
+if($result = $db->query('SELECT * FROM `electrical_panels` ORDER BY `name` ASC'))
+{
+	while($obj = $result->fetch_object())
+	{
+		$obj->breakers = array();
+		$obj->circuits_used	= 0;
+		$electrical_panels[$obj->id] = $obj;
+	}
+	$result->close();
+}
+if($result = $db->query('SELECT * FROM `electrical_breakers` ORDER BY `name` ASC'))
+{
+	while($obj = $result->fetch_object())
+	{
+		$electrical_breakers[$obj->id] = $obj;
+		
+		if( empty($electrical_panels[$obj->panel_id]))
+		{
+			$electrical_panels[0]->breakers[] =& $electrical_breakers[$obj->id];
+			continue;
+		}
+
+		$electrical_panels[$obj->panel_id]->breakers[$obj->slot_a] =& $electrical_breakers[$obj->id];
+		$electrical_panels[$obj->panel_id]->circuits_used += $obj->poles;
+
+		if( !empty($obj->slot_b))
+		{
+			$electrical_panels[$obj->panel_id]->breakers[$obj->slot_b] =& $electrical_breakers[$obj->id];
+		}
+	}
+	$result->close();
+}
+
+if(count($electrical_panels[0]->breakers) < 1)
+{
+	unset($electrical_panels[0]);
+}
+
+if( !empty($electrical_panels))
+{
+	echo '<form action="" method="post"><h3 class="subtitle" id="electrical-panels" style="">Electrical Panels</h3><table class="events" cellpadding="3"><tr><th>Location</th><th>Slots</th><th>Circuits</th><th>Tools</th><th>Mark</th></tr>';
+	foreach($electrical_panels as $key => $obj)
+	{
+		printf('<tr><td colspan="5" class="label">%1$s <span class="note">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td>%4$s</td><td class="tools">%5$s</td><td>%7$s</td></tr>',
+			$obj->name,
+			$obj->location,
+			$obj->slots,
+			$obj->circuits,
+			'<img title="Add Breaker" src="./style/img/ico/chart_organisation.png" style="cursor:pointer;" onclick="add_breaker(' . $obj->id . ')"/>',
+			$obj->notes,
+			sprintf('<input type="checkbox" name="panel[%1$s]" value="%1$s"/>', $obj->id)
+		);
+	}
+	echo '</table><input type="submit" class="button1" style="float:right; margin:50px 10px 0 0;" name="submit-panel-delete" value="Delete Selected"/></form><br class="clearfix"/>';
+}
+
+?>
+
+<form action="" method="post">
+	<h3 class="subtitle" id="new-project">New Panel</h3>
+	<p>Enter the details of the new electrical panel.</p>
+	<fieldset>
+	<dl style="float:left; ">
+		<dt>Panel Name</dt>
+		<dd><input type="text" class="text" name="panel-name" id="panel-name" value=""/></dd>
+		
+		<dt>Panel Location</dt>
+		<dd><input type="text" class="text" name="panel-location" id="panel-location" value=""/></dd>
+		
+		<dt>Panel Slot Count</dt>
+		<dd><input type="text" class="text" name="panel-slots" id="panel-slots" value=""/></dd>
+		
+		<dt>Panel Circuit Count</dt>
+		<dd><input type="text" class="text" name="panel-circuits" id="panel-circuits" value=""/></dd>
+		
+		<dt>Notes</dt>
+		<dd><textarea class="text" name="panel-notes" id="panel-notes" rows="3"></textarea></dd>
+		
+		
+	</dl>
+	<br class="clearfix"/>
+	<input type="submit" class="button1" style="float:right; margin:50px 10px 0 0;" name="submit-new-panel" value="Track Panel"/>
+	</fieldset>
+</form>
+
+<div id="form-dialog"></div>
+<script type="text/javascript">
+function add_breaker(panel_id)
+{
+	$('#form-dialog').load('./html-forms/new-electrical-breaker.html', function(){
+		var _dialog = $(this);
+		
+		_dialog.dialog({
+			width: 500,
+			title: 'Add Breaker',
+			modal: true,
+			buttons: [
+				{text: "Finished", click: function(){
+					var str = '';
+					_dialog.find('input[type="text"]').each(function(){
+						str += '&' + $(this).attr('name') + '=' + escape($(this).val());
+					});
+					$('<div></div>').load("./action.php?action=circuit-breakers&mode=add-breaker&panel_id=" + panel_id + str).dialog();
+					_dialog.dialog("close");
+				}}
+			]
+		});
+	});
+}
+
+
+function view_materials(project_id, project_name)
+{
+	$('<div></div>').load('./action.php?action=home-improvement&mode=show-materials&project_id=' + project_id, function(){
+		var _dialog = $(this);
+		_dialog.dialog({
+			width: 500,
+			title: 'Materials / Costs: ' + project_name,
+			modal: false,
+		});
+	});
+}
+
+function backdate(project_id, project_name)
+{
+	var _dialog = $('<div>YYYY-MM-DD<br/><input type="text" id="new-project-date"/></div>');
+	_dialog.dialog({
+			width: 500,
+			title: 'Change Completion Date: ' + project_name,
+			modal: true,
+			buttons: [
+				{text: "Update", click: function(){
+					$('<div></div>').load("./action.php?action=home-improvement&mode=backdate&project_id=" + project_id + "&new_date=" + _dialog.find('#new-project-date').val()).dialog();
+					_dialog.dialog("close");
+				}}
+			]
+		});
+}
+
+function add_material_slot(button)
+{
+	var slot = button.parentNode.cloneNode(true);
+	$(slot).find('input[type="text"]').each(function(){
+		$(this).val('');
+	});
+	button.parentNode.parentNode.appendChild(slot);
+	$(slot).find('input[type="text"]:first').focus();
+	button.parentNode.removeChild(button);
+}
+</script>

@@ -9,14 +9,14 @@ function toggle_garage()
 }
 </script>
 <table class="config">
-	<tr><td class="label">Side Door</td><td><?php echo @$pins[24]->state ? 'Closed' : 'Open'; ?></td></tr>
-	<tr><td class="label">Car Door</td><td id="garage-door-state"><?php echo @$pins[25]->state ? 'Closed' : 'Open'; ?></td></tr>
+	<tr><td class="label">Side Door</td><td><?php echo @$pins[24]->state ? 'Open' : 'Closed'; ?></td></tr>
+	<tr><td class="label">Car Door</td><td id="garage-door-state"><?php echo @$pins[25]->state ? 'Open' : 'Closed'; ?></td></tr>
 	<tr><td class="label">Time Car Door Automatically Closes</td><td ><?php echo $config['garage-auto-close-time']; ?></td></tr>
 	<tr>
 		<td class="label">Last Open</td>
 		<td>
 		<?php
-			$result = $db->query("SELECT `event_time` FROM `event_log` WHERE `pin_state` = 0 AND `pin` = 25 ORDER BY `event_time` DESC LIMIT 1;");
+			$result = $db->query("SELECT `event_time` FROM `event_log` WHERE `pin_state` = 1 AND `pin` = 25 ORDER BY `event_time` DESC LIMIT 1;");
 			if($obj = $result->fetch_object())
 			{
 				echo date($config['date-format'], strtotime($obj->event_time));
@@ -32,7 +32,7 @@ function toggle_garage()
 		<td class="label">Last Close</td>
 		<td>
 		<?php
-			$result = $db->query("SELECT `event_time` FROM `event_log` WHERE `pin_state` = 1 AND `pin` = 25 ORDER BY `event_time` DESC LIMIT 1;");
+			$result = $db->query("SELECT `event_time` FROM `event_log` WHERE `pin_state` = 0 AND `pin` = 25 ORDER BY `event_time` DESC LIMIT 1;");
 			if($obj = $result->fetch_object())
 			{
 				echo date($config['date-format'], strtotime($obj->event_time));
@@ -79,6 +79,6 @@ function toggle_garage()
 </table>
 
 <form>
-	<div><input type="button" class="button1 lefty-button1" id="garage-door-opener" title="Open / Close Garage Door" onclick="toggle_garage()" value="<?php echo @$pins[25]->state ? 'Open' : 'Close'; ?> Garage Door"></div>
+	<div><input type="button" class="button1 lefty-button1" id="garage-door-opener" title="Open / Close Garage Door" onclick="toggle_garage()" value="<?php echo @$pins[25]->state ? 'Close' : 'Open'; ?> Garage Door"></div>
 	<br class="clearfix"/>
 </form>

@@ -225,7 +225,7 @@ if($result = $db->query('SELECT SQL_CALC_FOUND_ROWS * FROM `event_log` ' . $sql 
 		printf('<tr style="text-align:left; background:#000; color:#04969c;"><td colspan="4">%5$s</td></tr><tr style="background:#111;"><td>%1$s</td><td>%2$s</td><td>%3$s</td><td>%4$s</td></tr>',
 			date($config['date-format'], strtotime($obj->event_time)),
 			!empty($pins[$obj->pin]) ? $pins[$obj->pin]->name : 'None',
-			!empty($pins[$obj->pin]) ? ($pins[$obj->pin]->input ? ($obj->pin_state ? 'Close' : 'Open') : ($obj->pin_state ? 'On' : 'Off')) : 'N/A',
+			!empty($pins[$obj->pin]) ? ($pins[$obj->pin]->input ? ($obj->pin_state ? 'Close' : 'Open') : ($obj->pin_state ? 'Off' : 'On')) : 'N/A',
 			(substr($obj->source, 0, 3) == 'IP:' && isset($network_map[substr($obj->source, 3)])) ? $network_map[substr($obj->source, 3)]->name : $obj->source,
 			$obj->notes
 		);

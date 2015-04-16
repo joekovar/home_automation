@@ -7,8 +7,8 @@ $pin = (int)_GET('pin');
 
 if($pin && $pin == 39)
 {
-	$xml = @file_get_contents('http://' . ARDUINO_IP . '/outputs?39=1');
-	add_log('Activated garage door', "IP:{$_SERVER['REMOTE_ADDR']}", 39, 1);
+	$xml = @file_get_contents('http://' . ARDUINO_IP . '/outputs?39=0');
+	add_log('Activated garage door', "IP:{$_SERVER['REMOTE_ADDR']}", 39, 0);
 	$meta = '<script type="text/javascript">window.location = "/mobile.php";</script>';
 }
 else if($pin)
@@ -60,7 +60,7 @@ p {font-size:0.75em;}
 	
 	for($i = 46; $i <= 49; $i++)
 	{
-		printf('<li><a href="/mobile.php?pin=%2$s">%1$s (%3$s)</a></li>', $pins[$i]->name, $i, ($pins[$i]->state ? '<span class="on">On</span>' : '<span class="off">Off</span>'));
+		printf('<li><a href="/mobile.php?pin=%2$s">%1$s (%3$s)</a></li>', $pins[$i]->name, $i, (!$pins[$i]->state ? '<span class="on">On</span>' : '<span class="off">Off</span>'));
 	}
 	
 	?>
@@ -70,7 +70,7 @@ p {font-size:0.75em;}
 <h3>Garage</h3>
 <p>Tap "door" to open/close the garage door.</p>
 <ul>
-	<li><a href="/mobile.php?pin=39">Car Door (<?php  echo ($pins[25]->state ? '<span class="on">Closed</span>' : '<span class="off">Open</span>'); ?>)</a></li>
+	<li><a href="/mobile.php?pin=39">Car Door (<?php  echo (!$pins[25]->state ? '<span class="on">Closed</span>' : '<span class="off">Open</span>'); ?>)</a></li>
 </ul>
 </div>
 <div class="section">

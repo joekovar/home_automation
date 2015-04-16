@@ -6,7 +6,7 @@
 		SD Card on pin 4
 */
 
-#define VERSION "1.0"
+#define VERSION "1.0.2"
 
 #include "SPI.h"
 #include "avr/pgmspace.h"
@@ -37,6 +37,10 @@ const int MAX_INPUT_CONTACTS = 5;
 int input_contacts[MAX_INPUT_CONTACTS] = {24, 25, 30, 32, 34};
 int input_contacts_last[MAX_INPUT_CONTACTS];
 int input_contacts_now[MAX_INPUT_CONTACTS];
+
+int a0_average = 0;
+int a0_count = 0;
+int a0_last = 0;
 
 // Determine memory left
 int freeRam () {
@@ -142,11 +146,11 @@ void setPin(int pin, int state)
 	switch(pin)
 	{
                 case 39: // garage door opener
-                  if(state == HIGH)
+                  if(state == LOW)
                   {
-                    digitalWrite(pin, HIGH);
-                    delay(250);
                     digitalWrite(pin, LOW);
+                    delay(250);
+                    digitalWrite(pin, HIGH);
                     if (client.connect(home_server, 80))
 		    {
 		    // Make a HTTP request:
@@ -202,7 +206,7 @@ void status(WebServer &server, WebServer::ConnectionType type, char *url_tail, b
 		
 	server.httpSuccess("text/xml");
 	
-	server << F("<status version=\"") << VERSION << F(" freeram=\"") << freeRam() << F("\" millis=\"") << millis() << F("\"/>");
+	server << F("<status version=\"") << VERSION << F("\" freeram=\"") << freeRam() << F("\" millis=\"") << millis() << F("\"/>");
 }
 
 void pinsXML(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
@@ -234,7 +238,7 @@ void pinsXML(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 
 void setup()
 {
-	// Setup custom pins\
+	// Setup custom pins
 	
 	// Door/Window Contacts / doorbell
 	for(int i = 0; i < MAX_INPUT_CONTACTS; i++)
@@ -243,7 +247,7 @@ void setup()
         }
 
         // Garage door opener
-        pinMode(39, OUTPUT); digitalWrite(39, LOW);
+        pinMode(39, OUTPUT); digitalWrite(39, HIGH);
 	
 	// humidity sensors
 	//pinMode(22, INPUT); //_PULLUP); // use INPUT_PULLUP when there is no resistor on the circuit
@@ -251,7 +255,7 @@ void setup()
 
 	// sprinkler relays
 	pinMode(46, OUTPUT); pinMode(47, OUTPUT); pinMode(48, OUTPUT); pinMode(49, OUTPUT);
-	digitalWrite(46, LOW); digitalWrite(47, LOW); digitalWrite(48, LOW); digitalWrite(49, LOW);
+	digitalWrite(46, HIGH); digitalWrite(47, HIGH); digitalWrite(48, HIGH); digitalWrite(49, HIGH);
 
 	// Setup hardware pins
 	pinMode(53, OUTPUT);     // ethernet shield sd card pin; 10 on uno, 53 on a mega
@@ -290,33 +294,63 @@ void setup()
 
 void loop()
 {
-
 	for(int i = 0; i < MAX_INPUT_CONTACTS; i++)
-        {
-           input_contacts_now[i] = digitalRead(input_contacts[i]);
-        }
-        if(memcmp(input_contacts_now, input_contacts_last, sizeof(input_contacts_last)) != 0)
-        {
-          if (client.connect(home_server, 80))
-	  {
-		// Make a HTTP request:
-		client << F("GET /arduino.php?action=pin-change&multi=1&pin=");
-                for(int i = 0; i < MAX_INPUT_CONTACTS; i++)
-                {
-                  if(input_contacts_now[i] != input_contacts_last[i])
-                  {
-                    client << F(",") << input_contacts[i] << F("-") << input_contacts_now[i];
-                  }
-                }
-                client << F(" HTTP/1.0");
-		client.println(); // finishes previous line
-		client.println(F("User-Agent: arduino-ethernet"));
-		client.println(F("Connection: close"));
-		client.println(); // finishes request
-		client.stop();
-	  }
-          memcpy(input_contacts_last, input_contacts_now, sizeof input_contacts_now);
-        }
+	{
+		input_contacts_now[i] = digitalRead(input_contacts[i]);
+	}
+	if(memcmp(input_contacts_now, input_contacts_last, sizeof(input_contacts_last)) != 0)
+	{
+		if (client.connect(home_server, 80))
+		{
+			// Make a HTTP request:
+			client << F("GET /arduino.php?action=pin-change&multi=1&pin=");
+			for(int i = 0; i < MAX_INPUT_CONTACTS; i++)
+			{
+				if(input_contacts_now[i] != input_contacts_last[i])
+				{
+					client << F(",") << input_contacts[i] << F("-") << input_contacts_now[i];
+				}
+			}
+			client << F(" HTTP/1.0");
+			client.println(); // finishes previous line
+			client.println(F("User-Agent: arduino-ethernet"));
+			client.println(F("Connection: close"));
+			client.println(); // finishes request
+			client.stop();
+		}
+		memcpy(input_contacts_last, input_contacts_now, sizeof input_contacts_now);
+	}
+	
+	// Water heater CT
+	a0_average += analogRead(A0);
+	if(++a0_count > 99)
+	{
+		a0_average = a0_average / 100;
+		if((a0_last == 1 && a0_average == 0) || (a0_last == 0 && a0_average > 0))
+		{
+			if(a0_last == 1 && a0_average == 0)
+			{
+				a0_last = 0;
+			}
+			else if(a0_last == 0 && a0_average > 0)
+			{
+				a0_last = 1;
+			}
+			if (client.connect(home_server, 80))
+			{
+				// Make a HTTP request:
+				client << F("GET /arduino.php?action=water-heater&status=") << a0_last;
+				client << F(" HTTP/1.0");
+				client.println(); // finishes previous line
+				client.println(F("User-Agent: arduino-ethernet"));
+				client.println(F("Connection: close"));
+				client.println(); // finishes request
+				client.stop();
+			}
+		}
+		a0_average = 0;
+		a0_count = 0;
+	}
 
 	char buff[64];
 	int len = 64;

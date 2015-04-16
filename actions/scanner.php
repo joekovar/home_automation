@@ -26,7 +26,7 @@ switch(_GET('mode', ''))
 	break;
 	
 	case 'scan':
-		$filename = preg_replace('#[^a-z0-9_-]+#', '', _GET('filename', 'last-scan'));
+		$filename = preg_replace('#[^A-Za-z0-9_-]+#', '', _GET('filename', 'last-scan'));
 
 		if(empty($filename))
 		{
@@ -38,6 +38,9 @@ switch(_GET('mode', ''))
 			$output_format	= _GET('format', 'pdf');
 
 			shell_exec('scanimage --format=tiff > ' . escapeshellarg("{$filepath}.tiff"));
+			//$__result = shell_exec('scanimage -b --format=tiff --batch-scan=yes --batch="' . escapeshellarg("{$filepath}%d") . '.tiff" > /var/www/cache/scanner/' . $filename . '.pdf');
+			//message::display('scanimage --format=tiff --batch="' . escapeshellarg("{$filepath}%d") . '"');
+			//exit;
 			
 			switch($output_format)
 			{

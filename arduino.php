@@ -33,7 +33,7 @@ switch($action)
 						$val = explode('-', $val);
 						add_log('Pin state changed', "IP:{$_SERVER['REMOTE_ADDR']}", (int)$val[0], (int)$val[1]);
 						
-						if($config['doorbell-enabled'] && (int)$val[0] == 34 && (int)$val[1] == 1) // doorbell is pressed
+						if($config['doorbell-enabled'] && (int)$val[0] == 34 && (int)$val[1] == 0) // doorbell is pressed
 						{
 							if($result = $db->query('SELECT `module`, `attributes` FROM `cameras` WHERE `id` = 1'))
 							{
@@ -69,11 +69,16 @@ switch($action)
 	case 'water-heater':
 		if(IS_ARDUINO)
 		{
-			if((int)_GET('status', -1) > -1)
+			if(isset($_GET['status']))
 			{
-				if( ! $db->query("INSERT INTO `climate_log` (`pin`, `type`, `reading`, `analog`) VALUES (0, 'water-heater', " . (int)_GET('status') . ", 1)"))
+				$sql = "INSERT INTO `climate_log` (`pin`, `type`, `reading`, `analog`) VALUES (0, 'water-heater', " . (int)$_GET['status'] . ", 1)";
+				if( ! $db->query($sql))
 				{
 					add_log('Water heater logging failed', 'arduino.php');
+				}
+				else
+				{
+				//	add_log($sql);
 				}
 			}
 			else
