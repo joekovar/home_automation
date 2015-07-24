@@ -74,7 +74,7 @@ p {font-size:0.75em;}
 </ul>
 </div>
 <div class="section">
-<h3>Front Door Camera</h3>
+<h3>Garage Camera</h3>
 <p>
 <?php
 

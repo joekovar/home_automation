@@ -35,8 +35,6 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 		$db->query('DELETE FROM `house_projects_materials` WHERE `name` = ""');
 		if($result = $db->query('SELECT `id`, `project_id`, `name`, `cost`, `obtained` FROM `house_projects_materials` ORDER BY `name` ASC'))
 		{
-			$material_words = array();
-			echo '<ul>';
 			while($obj = $result->fetch_object())
 			{
 				$_material = explode(' ', preg_replace('#\s{2,}#', ' ', preg_replace('#[^a-z ]+|s\b#', '', strtolower($obj->name))));
@@ -47,28 +45,30 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 					{
 						continue;
 					}
-					if(empty($material_words[$val]))
-					{
-						$material_words[$val] = 0;
-					}
-					$material_words[$val] += $obj->cost;
 				}
-				//printf('<li>%1$s -- %2$s</li>', $obj->name, '$' . number_format($obj->cost, 2, '.', ','));
 
 				$house_projects[$obj->project_id]->materials[$obj->id]	= $obj;
 				$house_projects[$obj->project_id]->estimated_cost		+= $obj->cost;
 				$house_projects[$obj->project_id]->materials_obtained	+= $obj->obtained ? 1 : 0;
 				$house_projects[$obj->project_id]->material_count++;
 			}
-			echo '</ul>';
-			asort($material_words);
-			print_pre($material_words);
 		}
 		
-		printf('<p>Tracking <strong>%1$s</strong> projects, <strong>%2$s</strong> active and <strong>%3$s</strong> completed.</p>',
+		$house_count = 0;
+		if($result = $db->query('SELECT COUNT(`id`) AS `house_count` FROM `houses`'))
+		{
+			if($obj = $result->fetch_object())
+			{
+				$house_count = $obj->house_count;
+			}
+		}
+		
+		
+		printf('<p>Tracking <strong>%1$s</strong> projects at <strong>%4$s</strong> houses, <strong>%2$s</strong> active and <strong>%3$s</strong> completed.</p>',
 			count($house_projects),
 			count($project_statuses['active']),
-			count($project_statuses['completed'])
+			count($project_statuses['completed']),
+			$house_count
 		);
 
 		if( !empty($project_statuses['completed']))

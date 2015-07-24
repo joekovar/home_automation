@@ -2,6 +2,16 @@
 
 include_once(ROOT_PATH . '/php/common.php');
 
+if(empty($config['active-house']))
+{
+	$config['active-house'] = 1;
+}
+$house_id = (int)_GET('house_id', $config['active-house']);
+if($house_id != $config['active-house'])
+{
+	$config['active-house'] = $house_id;
+}
+
 if(_GET('submit-project-complete', false))
 {
 	if( !empty($_POST['project']) && is_array($_POST['project']))
@@ -59,9 +69,10 @@ if(_GET('submit-project-delete', false))
 
 if(_GET('submit-new-project', false))
 {
-	if($result = $db->query(sprintf('INSERT INTO `house_projects` (`name`, `notes`) VALUES ("%1$s", "%2$s")',
+	if($result = $db->query(sprintf('INSERT INTO `house_projects` (`house_id`, `name`, `notes`) VALUES (%3$s, "%1$s", "%2$s")',
 		$db->real_escape_string(_GET('project-name')),
-		$db->real_escape_string(_GET('project-notes'))
+		$db->real_escape_string(_GET('project-notes')),
+		(int)$house_id
 	)))
 	{
 		$project_id = $db->insert_id;
@@ -84,7 +95,25 @@ if(_GET('submit-new-project', false))
 	}
 }
 
-if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed` FROM `house_projects` ORDER BY `last_action` DESC'))
+if($result = $db->query('SELECT * FROM `houses` ORDER BY `address` ASC'))
+{
+	print('<form action="" method="post"><p>House: <select name="house_id" onchange="this.form.submit();">');
+	while($obj = $result->fetch_object())
+	{
+		printf('<option value="%1$s"%3$s>%2$s</option>',
+			$obj->id,
+			htmlspecialchars($obj->address),
+			($obj->id == $house_id ? ' selected="selected"' : '')
+		);
+	}
+	print('</select></p></form>');
+}
+
+if($result = $db->query('
+	SELECT `id`, `name`, `last_action`, `notes`, `completed`
+	FROM `house_projects`
+	WHERE `house_id` = ' . $house_id . '
+	ORDER BY `last_action` DESC'))
 {
 	$house_stats			= array(
 		'by_year'			=> array(),
@@ -117,6 +146,10 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 		{
 			while($obj = $result->fetch_object())
 			{
+				if(empty($house_projects[$obj->project_id]))
+				{
+					continue;
+				}
 				$house_projects[$obj->project_id]->materials[$obj->id]	= $obj;
 				$house_projects[$obj->project_id]->estimated_cost		+= $obj->cost;
 				$house_projects[$obj->project_id]->materials_obtained	+= $obj->obtained ? 1 : 0;
@@ -132,10 +165,10 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 
 		if( !empty($project_statuses['active']))
 		{
-			echo '<form action="" method="post"><h3 class="subtitle" id="active-projects" style="">Active Projects</h3><table class="events" cellpadding="3"><tr><th>Last Action</th><th><abbr title="Excluding Tax">Current Costs</abbr></th><th>Tools</th><th>Mark</th></tr>';
+			echo '<form action="" method="post"><input type="hidden" name="house_id" value="' . $house_id . '"/><h3 class="subtitle" id="active-projects" style="">Active Projects</h3><table class="events" cellpadding="3"><tr><th>Last Action</th><th><abbr title="Excluding Tax">Current Costs</abbr></th><th>Tools</th><th>Mark</th></tr>';
 			foreach($project_statuses['active'] as $key => $obj)
 			{
-				printf('<tr><td colspan="5" class="label">%1$s <span class="note" contentEditable="true">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td><td>%7$s</td></tr>',
+				printf('<tr><td colspan="5" class="label">%1$s <span class="note">%6$s</span></td></tr><tr><td>%2$s</td><td>%3$s</td><td class="tools">%5$s</td><td>%7$s</td></tr>',
 					$obj->name,
 					date($config['date-only-format'], $obj->last_action),
 					'$' . number_format($obj->estimated_cost, 2, '.', ','), // cost
@@ -190,6 +223,7 @@ if($result = $db->query('SELECT `id`, `name`, `last_action`, `notes`, `completed
 ?>
 
 <form action="" method="post">
+	<input type="hidden" name="house_id" value="<?php echo $house_id; ?>"/>
 	<h3 class="subtitle" id="new-project">New Project</h3>
 	<p>Enter the details of the new home improvement project to keep track of.</p>
 	<fieldset>

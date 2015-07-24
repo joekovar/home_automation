@@ -139,6 +139,7 @@ foreach($sprinklers as $val)
 					$option .= "{$dow}, ";
 				}
 			}
+			$option = substr($option, 0, -2);
 			echo "{$option}&nbsp;&bull;&nbsp; START: " . date('g:i A', strtotime($obj->start_time)) . " &nbsp;&bull;&nbsp; DURATION: {$obj->runtime}</option>";
 		}
 	}

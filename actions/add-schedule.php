@@ -21,13 +21,15 @@ if($pin > 0 && $pin < 54 && !empty($pins[$pin]))
 				if($db->query("INSERT INTO `pin_schedule` (pin, pin_state, start_time, runtime, days_of_week) VALUES (". $pin . "," . $pin_state . ",'" . date('H:i:00', $start) . "','" . $length . "'," . $dow . ")"))
 				{
 					message::display("Created new schedule for pin #{$pin} - {$pins[$pin]->name}");
-					break;
+					$success = true;
 				}
 			}
 		}
 	}
 }
-print_pre($_GET);
-message::display('Fail');
-
+if( ! $success)
+{
+	print_pre($_GET);
+	message::display('Fail');
+}
 ?>
